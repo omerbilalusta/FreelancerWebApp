@@ -1,0 +1,112 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+@*<h1>@ViewData["Title"]</h1>*@
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet" />
+<!-- MDB -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+      rel="stylesheet" />
+<!-- MDB -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"></script>
+
+<section class="background-radial-gradient overflow-hidden">
+
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+        <div class="row gx-lg-5 align-items-center mb-5">
+            <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                The best offer <br />
+                <span style="color: hsl(218, 81%, 75%)">for your business</span>
+            </h1>
+            <p class="mb-1 opacity-70" style="color: hsl(218, 81%, 85%)">
+                Freelancer or Customer ?
+            </p>
+            <p class="mb-1 opacity-70" style="color: hsl(218, 81%, 85%)">
+                As a Customer, you can publish job; As a Freelancer, you can get the job.
+            </p>
+            <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
+                Find the perfect freelance services for your business;
+            </p>
+            <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
+                Find a job and earn your own money.
+            </p>
+            <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
+                Let's start.
+            </p>
+            </div>
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <div class="card" style="background-color:rgba(255, 255, 255, 0.20);">
+                    <div class="card-body px-4 py-5 px-md-5">
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-outline mb-4">
+                                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                                <label asp-for="Input.Email" class="form-label"></label>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                                <label asp-for="Input.Password" class="form-label"></label>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+                        </form>
+                    </div>
+                </div>
+
+                @*<div class="col-md-6 col-md-offset-2">
+                <section>
+                <h3>Use another service to register.</h3>
+                <hr />
+                @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                <div>
+                <p>
+                There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                article
+                about setting up this ASP.NET application to support logging in via external services
+                </a>.
+                </p>
+                </div>
+                }
+                else
+                {
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                <div>
+                <p>
+                @foreach (var provider in Model.ExternalLogins)
+                {
+                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                }
+                </p>
+                </div>
+                </form>
+                }
+                }
+                </section>
+                </div>
+                </div>*@
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

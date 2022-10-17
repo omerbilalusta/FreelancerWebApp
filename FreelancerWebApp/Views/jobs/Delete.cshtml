@@ -1,0 +1,94 @@
+﻿@model FreelancerWebApp.Models.job
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+@*<div class="container">
+    <h1>Delete</h1>
+
+</div>*@
+
+
+<div class="container py-4">
+    <h2>Delete Post ~ @Html.DisplayFor(Model => Model.Job_Title)</h2>
+    
+    <div class="jumbotron">
+        <div class="p-5 mb-4 bg-light rounded border border-dark">
+            <div class="container">
+                <h5>Are you sure you want to delete this?</h5>
+            </div>
+            <div class="container-fluid py-5">
+
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Category)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Category)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Offered_Price)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Offered_Price)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Day)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Day) Day
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Owner_ID)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Owner_ID)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Freelancer_ID)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Freelancer_ID)
+                    </dd>
+                    @*<dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Days)
+                    </dt>
+                    <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Days)
+                    </dd>*@
+
+                </dl>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="row">
+                        <div class="col-sm-9"></div>
+                        <div class="col-sm-1">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-outline-dark btn-success" type="button"><a class="text-white" asp-action="Index">Back to List</a></button>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

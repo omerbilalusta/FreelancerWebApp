@@ -1,0 +1,123 @@
+﻿@model FreelancerWebApp.Models.job
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@*<div class="container">
+    <h1>Details</h1>
+</div>*@
+
+
+@*<div class="container">
+    <h4>job</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Job_Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Job_Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Job_Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Job_Category)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Job_Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Job_Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Offered_Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Offered_Price)$
+        </dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Day)
+        </dd>
+
+    </dl>
+</div>
+<div class="container">
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+<div class="container py-4">
+    <h2>Job Details ~ @Html.DisplayFor(Model => Model.Job_Title)</h2>
+    <div class="jumbotron">
+        <div class="p-5 mb-4 bg-light rounded border border-dark">
+            <div class="container-fluid py-5">
+
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Category)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Category)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Offered_Price)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Offered_Price)$
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Day)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Day) Day
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Owner_ID)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Owner_ID)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Freelancer_ID)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Freelancer_ID)
+                    </dd>
+                    @*<dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Day)
+                    </dd>*@
+
+                </dl>
+                @*<button class="btn btn-outline-light" type="button">Example button</button>*@
+                <div class="row">
+                    <div class="col-sm-11"></div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-outline-dark btn-primary" type="button"><a class="text-white" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a></button>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        <button class="btn btn-outline-dark btn-primary" type="button"><a class="text-white" asp-action="Index">Back to List</a></button>
+    </div>
+
+
