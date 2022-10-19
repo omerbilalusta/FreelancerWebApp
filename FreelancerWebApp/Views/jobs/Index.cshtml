@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FreelancerWebApp.Models.job>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Jobs";
 }
 <script>
     body{
@@ -26,10 +26,7 @@
         </div>
     </section>
 </header>
-<div class="album py-5">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            @*<table class="table">
+@*<table class="table">
             <thead>
             <tr>
             <th>
@@ -48,7 +45,7 @@
             </tr>
             </thead>
             <tbody>*@
-            @*@foreach (var item in Model)
+@*@foreach (var item in Model)
             {
             <tr>
             <td>
@@ -71,30 +68,81 @@
             </td>-->
             </tr>
             }*@
+
+
+
+<div class="container">
+    <br />
+    <br />
+    <h4 class="text-center">Available Jobs</h4>
+</div>
+
+<div class="album py-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             @foreach (var item in Model)
             {
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                    
-                    <div class="card-body">
-                            <h5>@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.Job_Description)</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">View</a>
+                if (item.Freelancer_ID == "0" )
+                {
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+                            <div class="card-body">
+                                <h5>@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">View</a>
+                                    </div>
+                                    <small class="text-muted">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-success" type="button"> <a class="text-light" asp-action="getJob" asp-route-id="@item.Id"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$ </a></button>
+                                    </div>
+                                </div>
                             </div>
-                            <small class="text-muted">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
-                            <div class="btn-group">
-                                    <p class="btn btn-sm btn-outline-success ">Price: @Html.DisplayFor(modelItem => item.Offered_Price)$ </p>
-                            </div>                  
                         </div>
                     </div>
-                </div>
-            </div>
-                
+                }
             }
-            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <h4 class="text-center">Unavailable Jobs</h4>
+</div>
+
+<div class="album py-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            @foreach (var item in Model)
+            {
+                if (item.Freelancer_ID != "0")
+                {
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+                            <div class="card-body">
+                                <h5>@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id">View</a>
+                                    </div>
+                                    <small class="text-muted">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-success" type="button" disabled> <a class="text-light" asp-action="getJob" asp-route-id="@item.Id"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$ </a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
             @*</tbody>
             </table>*@
         </div>

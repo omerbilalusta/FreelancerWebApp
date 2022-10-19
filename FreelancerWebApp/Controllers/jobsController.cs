@@ -56,7 +56,7 @@ namespace FreelancerWebApp.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.userid = User.Identity.Name;
             return View(job);
         }
 
@@ -65,6 +65,7 @@ namespace FreelancerWebApp.Controllers
         public IActionResult Create()
         {
             //ViewData("UserId");
+            ViewBag.userid = User.Identity.Name;
             return View();
         }
 
@@ -99,6 +100,7 @@ namespace FreelancerWebApp.Controllers
             {
                 return NotFound();
             }
+            ViewBag.userid = User.Identity.Name;
             return View(job);
         }
 
@@ -109,6 +111,60 @@ namespace FreelancerWebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID")] job job)
+        {
+            if (id != job.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(job);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!jobExists(job.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(job);
+        }
+
+        // GET: jobs/getJob/5
+        [Authorize]
+        public async Task<IActionResult> getJob(int? id)
+        {
+            if (id == null || _context.job == null)
+            {
+                return NotFound();
+            }
+
+            var job = await _context.job.FindAsync(id);
+            if (job == null)
+            {
+                return NotFound();
+            }
+            ViewBag.userid = User.Identity.Name;
+            return View(job);
+        }
+
+        // POST: jobs/getJob/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> getJob(int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID")] job job)
         {
             if (id != job.Id)
             {
@@ -153,7 +209,7 @@ namespace FreelancerWebApp.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.userid = User.Identity.Name;
             return View(job);
         }
 

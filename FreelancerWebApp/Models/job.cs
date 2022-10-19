@@ -14,9 +14,9 @@
 
         public int Day { get; set; }
 
-        public int Owner_ID { get; set; }
+        public string Owner_ID { get; set; }
 
-        public int Freelancer_ID { get; set; }
+        public string Freelancer_ID { get; set; }
 
 
         public job ()

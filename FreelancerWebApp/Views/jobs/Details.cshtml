@@ -1,7 +1,7 @@
 ﻿@model FreelancerWebApp.Models.job
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Jobs Detail";
 }
 
 @*<div class="container">
@@ -103,14 +103,34 @@
 
                 </dl>
                 @*<button class="btn btn-outline-light" type="button">Example button</button>*@
+                @if (Model.Owner_ID != ViewBag.userid){
                 <div class="row">
-                    <div class="col-sm-11"></div>
-                    <div class="col-sm-1">
-                        <button class="btn btn-outline-dark btn-primary" type="button"><a class="text-white" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a></button>
+                    <div class="col-sm-9"></div>
+                    <div class="col-sm-3">
+                        <p class="text-danger">You don't have access to <strong>edit</strong> the job.</p>
                     </div>
                 </div>
+                }
+                else if (Model.Freelancer_ID != "0"){
+                <div class="row">
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-4">
+                        <p class="text-danger">This job already taken, you can't <strong>edit</strong> it.</p>
+                    </div>
+                </div>
+                }
+                else if (Model.Owner_ID == ViewBag.userid)
+                {
+                    <div class="row">
+                        <div class="col-sm-11"></div>
+                        <div class="col-sm-1">
+                            <button class="btn btn-outline-dark btn-primary" type="button"><a class="text-white" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a></button>
+                        </div>
+                    </div>
+                }
                 
-
+                
+               
             </div>
         </div>
     </div>

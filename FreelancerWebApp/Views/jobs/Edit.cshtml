@@ -1,7 +1,7 @@
 ﻿@model FreelancerWebApp.Models.job
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Job";
 }
 <div class="container">
     <h1>Edit Job</h1>
@@ -9,6 +9,8 @@
     <h4>job</h4>
     <hr />*@
 </div>
+
+
 
 <div class="container py-4">
     <div class="jumbotron">
@@ -59,18 +61,18 @@
                         </div>
                         <div class="col-sm-4"></div>
                         <div class="col-sm-2">
-                            <label asp-for="Owner_ID" class="control-label"></label>
+                            @*<label asp-for="Owner_ID" class="control-label"></label>*@
                         </div>
                         <div class="col-sm-6">
-                            <input asp-for="Owner_ID" class="form-control" placeholder="Owner_ID" disabled/>
+                            <input asp-for="Owner_ID" class="form-control" placeholder="Owner_ID" hidden/>
                             <span asp-validation-for="Owner_ID" class="text-danger"></span>
                         </div>
-                        <div class="col-sm-4"></div>
+                       <div class="col-sm-4"></div>
                         <div class="col-sm-2">
-                            <label asp-for="Freelancer_ID" class="control-label"></label>
+                            @*<label asp-for="Freelancer_ID" class="control-label"></label>*@
                         </div>
                         <div class="col-sm-6">
-                            <input asp-for="Freelancer_ID" class="form-control" placeholder="Freelancer_ID" disabled/>
+                            <input asp-for="Freelancer_ID" class="form-control" placeholder="Freelancer_ID" hidden/>
                             <span asp-validation-for="Freelancer_ID" class="text-danger"></span>
                         </div>
                         <div class="col-sm-4"></div>
@@ -84,7 +86,6 @@
         </div>
     </div>
 </div>
-
 <div class="container">
     <button class="btn btn-outline-dark btn-primary" type="button"><a class="text-light" asp-action="Index">Back to List</a></button>
 </div>

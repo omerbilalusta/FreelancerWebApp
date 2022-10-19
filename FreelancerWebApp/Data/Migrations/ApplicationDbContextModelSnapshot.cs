@@ -49,7 +49,7 @@ namespace FreelancerWebApp.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Owner_ID")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Freelancer_ID")
                         .HasColumnType("int");

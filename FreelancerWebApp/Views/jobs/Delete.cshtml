@@ -1,7 +1,7 @@
 ﻿@model FreelancerWebApp.Models.job
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Job";
 }
 
 @*<div class="container">
@@ -71,8 +71,36 @@
                     </dd>*@
 
                 </dl>
+                @if (Model.Owner_ID == ViewBag.userid)
+                {
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
 
-                <form asp-action="Delete">
+                        <div class="row">
+                            <div class="col-sm-9"></div>
+                            <div class="col-sm-1">
+                                <input type="submit" value="Delete" class="btn btn-danger" />
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-outline-dark btn-success" type="button"><a class="text-white" asp-action="Index">Back to List</a></button>
+                            </div>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-sm-8"></div>
+                        <div class="col-sm-4">
+                            <p class="text-danger">You don't have access to <strong>delete</strong> the job.</p>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-outline-dark btn-success" type="button"><a class="text-white" asp-action="Index">Back to List</a></button>
+                        </div>
+                    </div>
+                }
+
+                @*<form asp-action="Delete">
                     <input type="hidden" asp-for="Id" />
 
                     <div class="row">
@@ -84,7 +112,7 @@
                             <button class="btn btn-outline-dark btn-success" type="button"><a class="text-white" asp-action="Index">Back to List</a></button>
                         </div>
                     </div>
-                </form>
+                </form>*@
 
 
 

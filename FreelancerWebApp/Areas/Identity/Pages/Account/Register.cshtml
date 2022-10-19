@@ -18,30 +18,37 @@
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"></script>
 
-<section class="background-radial-gradient overflow-hidden">
-
-    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-        <div class="row gx-lg-5 align-items-center mb-5">
-            <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-                The best offer <br />
-                <span style="color: hsl(218, 81%, 75%)">for your business</span>
-            </h1>
-            <p class="mb-1 opacity-70" style="color: hsl(218, 81%, 85%)">
-                Freelancer or Customer ?
-            </p>
-            <p class="mb-1 opacity-70" style="color: hsl(218, 81%, 85%)">
-                As a Customer, you can publish job; As a Freelancer, you can get the job.
-            </p>
-            <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
-                Find the perfect freelance services for your business;
-            </p>
-            <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
-                Find a job and earn your own money.
-            </p>
-            <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
-                Let's start.
-            </p>
+<header class="py-5" style="background-color: rgba(33,37,41);">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center">
+            <div class="col-lg-8 col-xl-7 col-xxl-6">
+                <div class="my-5 text-center text-xl-start">
+                <br />
+                
+                
+                    <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                        Welcome to the <br />
+                        <span style="color: #ffbb33 ">Freelancer.com</span>
+                    </h1>
+                    <p class="mb-1 opacity-70" style="color: hsl(218, 81%, 85%)">
+                        Freelancer or Customer ?
+                    </p>
+                    <p class="mb-1 opacity-70" style="color: hsl(218, 81%, 85%)">
+                        As a Customer, you can publish job; As a Freelancer, you can get the job.
+                    </p>
+                    <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
+                        Find the perfect freelance services for your business;
+                    </p>
+                    <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
+                        Find a job and earn your own money.
+                    </p>
+                    <p class="mb-2 opacity-70" style="color: hsl(218, 81%, 85%)">
+                        Let's start.
+                    </p>
+                    <br />
+                    <br />
+                    <br />
+                </div>
             </div>
             <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
                 <div class="card" style="background-color:rgba(255, 255, 255, 0.20);">
@@ -49,21 +56,26 @@
                         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-outline mb-4">
-                                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                                <label asp-for="Input.Email" class="form-label"></label>
+                                <input asp-for="Input.Email" class="form-control text-light text-opacity-50" autocomplete="username" aria-required="true" />
+                                <label asp-for="Input.Email" class="form-label text-light text-opacity-50"></label>
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="form-outline mb-4">
-                                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                                <label asp-for="Input.Password" class="form-label"></label>
+                                <input asp-for="Input.Password" class="form-control text-light text-opacity-50" autocomplete="current-password" aria-required="true" />
+                                <label asp-for="Input.Password" class="form-label text-light text-opacity-50"></label>
                                 <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
                             <div class="form-outline mb-4">
-                                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                                <input asp-for="Input.ConfirmPassword" class="form-control text-light text-opacity-50" autocomplete="new-password" aria-required="true" />
+                                <label asp-for="Input.ConfirmPassword" class="form-label text-light text-opacity-50"></label>
                                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
-                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+                            <div class="row">
+                                <div class="col-sm-9"></div>
+                                <div class="col-sm-3">
+                                    <button id="registerSubmit" type="submit" class="w-100 btn btn-md btn-primary">Register</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -105,7 +117,7 @@
             </div>
         </div>
     </div>
-</section>
+</header>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

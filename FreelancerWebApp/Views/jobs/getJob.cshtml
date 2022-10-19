@@ -1,0 +1,121 @@
+﻿@model FreelancerWebApp.Models.job
+
+@{
+    ViewData["Title"] = "Get Job";
+}
+@*<h4>job</h4>
+<hr />*@
+<div class="container py-4">
+    <div class="jumbotron">
+        <div class="p-5 mb-4 bg-light rounded border border-dark">
+            <div class="container-fluid py-5">
+                <h5> Do you want to get this job?</h5>
+            </div>
+            <div class="container-fluid py-5">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Title)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Category)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Category)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Job_Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Job_Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Offered_Price)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Offered_Price)$
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Day)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Day) Day
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Owner_ID)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Owner_ID)
+                    </dd>
+                </dl>
+            </div>
+            <div class="container-fluid py-5">
+                <form asp-action="getJob">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            @*<label asp-for="Job_Title" class="control-label"></label>*@
+                            <input asp-for="Job_Title" class="form-control" hidden />
+                            <span asp-validation-for="Job_Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @*<label asp-for="Job_Category" class="control-label"></label>*@
+                            <input asp-for="Job_Category" class="form-control" hidden />
+                            <span asp-validation-for="Job_Category" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @*<label asp-for="Job_Description" class="control-label"></label>*@
+                            <input asp-for="Job_Description" class="form-control" hidden />
+                            <span asp-validation-for="Job_Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @*<label asp-for="Offered_Price" class="control-label"></label>*@
+                            <input asp-for="Offered_Price" class="form-control" hidden />
+                            <span asp-validation-for="Offered_Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @*<label asp-for="Day" class="control-label"></label>*@
+                            <input asp-for="Day" class="form-control" hidden />
+                            <span asp-validation-for="Day" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @*<label asp-for="Owner_ID" class="control-label"></label>*@
+                            <input asp-for="Owner_ID" class="form-control" hidden />
+                            <span asp-validation-for="Owner_ID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @*<label asp-for="Freelancer_ID" class="control-label"></label>*@
+                            <input asp-for="Freelancer_ID" class="form-control" value="@ViewBag.userid" hidden />
+                            <span asp-validation-for="Freelancer_ID" class="text-danger"></span>
+                        </div>
+                        @if(Model.Owner_ID != ViewBag.userid){
+                            <div class="col-sm-11"></div>
+                            <div class="col-sm-1">
+                                <input type="submit" value="Get Job" class="btn btn-success" />
+                            </div>
+                        }
+                        else{
+                            <div class="col-sm-8"></div>
+                            <div class="col-sm-4">
+                                <p class="text-danger">This is already your job. You can't get your own job.</p>
+                            </div>
+                        }
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <button class="btn btn-outline-dark btn-primary" type="button"><a class="text-light" asp-action="Index">Back to List</a></button>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

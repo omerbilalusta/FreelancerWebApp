@@ -19,8 +19,8 @@ namespace FreelancerWebApp.Data.Migrations
                     Job_Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Offered_Price = table.Column<int>(type: "int", nullable: false),
                     Day = table.Column<int>(type: "int", nullable: true),
-                    Owner_ID = table.Column<int>(type: "int", nullable: true),
-                    Freelancer_ID = table.Column<int>(type: "int", nullable: true)
+                    Owner_ID = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Freelancer_ID = table.Column<string>(type: "nvarchar(50)", nullable: true)
                 },
                 constraints: table =>
                 {

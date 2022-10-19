@@ -1,7 +1,7 @@
 ﻿@model FreelancerWebApp.Models.job
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Job";
 }
 
 
@@ -90,18 +90,18 @@
                         </div>
                         <div class="col-sm-4"></div>
                         <div class="col-sm-2">
-                            <label asp-for="Owner_ID" class="control-label"></label>
+                            @*<label asp-for="Owner_ID" class="control-label"></label>*@
                         </div>
                         <div class="col-sm-6">
-                            <input asp-for="Owner_ID" class="form-control" placeholder="Owner_ID" disabled/>
+                            <input asp-for="Owner_ID" class="form-control" placeholder="Owner_ID" value="@ViewBag.userid" hidden/>
                             <span asp-validation-for="Owner_ID" class="text-danger"></span>
                         </div>
-                        <div class="col-sm-4"></div>
+                        @*<div class="col-sm-4"></div>
                         <div class="col-sm-2">
                             <label asp-for="Freelancer_ID" class="control-label"></label>
-                        </div>
+                        </div>*@
                         <div class="col-sm-6">
-                            <input asp-for="Freelancer_ID" class="form-control" placeholder="Freelancer_ID" disabled/>
+                            <input asp-for="Freelancer_ID" class="form-control" placeholder="Freelancer_ID" value="0" hidden/>
                             <span asp-validation-for="Freelancer_ID" class="text-danger"></span>
                         </div>
                         
