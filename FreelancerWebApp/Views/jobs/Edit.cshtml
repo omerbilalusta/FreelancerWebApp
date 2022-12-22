@@ -3,93 +3,119 @@
 @{
     ViewData["Title"] = "Edit Job";
 }
-<div class="container">
+@*<div class="container">
     <h1>Edit Job</h1>
-@*
+
     <h4>job</h4>
-    <hr />*@
-</div>
+    <hr />
+</div>*@
 
 
 
 <div class="container py-4">
-    <div class="jumbotron">
-        <div class="p-5 mb-4 bg-light rounded border border-dark">
-            <div class="container-fluid py-5">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Id" />
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label asp-for="Job_Title" class="control-label"></label>
+        <div class="mb-4">
+            <div class="likecontainer">
+                <div class="text-center">
+                    <h1>Edit Job</h1>
+                    <h4>Change information based on your ideas</h4>
+                    <hr />
+                </div>
+                <div class="row gx-5">
+                    <div class="col-lg-12">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="mt-3">
+                            <label asp-for="Job_Title" class="control-label">Title of Job</label>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="mt-1">
                             <input asp-for="Job_Title" class="form-control" placeholder="Type Job Title" />
                             <span asp-validation-for="Job_Title" class="text-danger"></span>
                         </div>
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-2">
-                            <label asp-for="Job_Category" class="control-label"></label>
+                        <div class="mt-3">
+                            <label asp-for="Job_Category" class="control-label">Category of Job</label>
                         </div>
-                        <div class="col-sm-6">
-                            <input asp-for="Job_Category" class="form-control" placeholder="Type Job Category(Software, Text, Graphic Design)" />
+                        <div class="mt-1">
+                            <select asp-for="Job_Category" asp-items="@ViewBag.ColorSet" class="form-select">
+                                <option value="">Select Category </option>
+                            </select>
                             <span asp-validation-for="Job_Category" class="text-danger"></span>
                         </div>
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-2">
-                            <label asp-for="Job_Description" class="control-label"></label>
+                        <div class="mt-3">
+                            <label asp-for="Job_Description" class="control-label">Description of Job</label>
                         </div>
-                        <div class="col-sm-6">
-                            <input asp-for="Job_Description" class="form-control" placeholder="Explain Job, Type Something about it" />
+                        <div class="mt-1">
+                            <textarea asp-for="Job_Description" class="form-control" placeholder="Explain Job, Type Something about it" id="floatingTextarea" style="height:73px"></textarea>
                             <span asp-validation-for="Job_Description" class="text-danger"></span>
                         </div>
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-2">
-                            <label asp-for="Offered_Price" class="control-label"></label>
+                        <div class="mt-3">
+                            <label asp-for="Offered_Price" class="control-label">Price</label>
                         </div>
-                        <div class="col-sm-6">
-                            <input asp-for="Offered_Price" class="form-control" placeholder="Enter Reward for the job"/>
+                        <div class="mt-1">
+                            <input asp-for="Offered_Price" class="form-control" placeholder="Enter Reward for the job" />
                             <span asp-validation-for="Offered_Price" class="text-danger"></span>
                         </div>
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-2">
-                            <label asp-for="Day" class="control-label"></label>
+                        <div class="mt-3">
+                            <label asp-for="Day" class="control-label">Limit Day</label>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="mt-1">
                             <input asp-for="Day" class="form-control" placeholder="Enter Limit Day(Type as a day)" />
                             <span asp-validation-for="Day" class="text-danger"></span>
                         </div>
-                        <div class="col-sm-4"></div>
                         <div class="col-sm-2">
                             @*<label asp-for="Owner_ID" class="control-label"></label>*@
                         </div>
                         <div class="col-sm-6">
-                            <input asp-for="Owner_ID" class="form-control" placeholder="Owner_ID" hidden/>
+                            <input asp-for="Owner_ID" class="form-control" placeholder="Owner_ID" hidden />
                             <span asp-validation-for="Owner_ID" class="text-danger"></span>
                         </div>
-                       <div class="col-sm-4"></div>
+                        <div class="col-sm-4"></div>
                         <div class="col-sm-2">
                             @*<label asp-for="Freelancer_ID" class="control-label"></label>*@
                         </div>
                         <div class="col-sm-6">
-                            <input asp-for="Freelancer_ID" class="form-control" placeholder="Freelancer_ID" hidden/>
+                            <input asp-for="Freelancer_ID" class="form-control" placeholder="Freelancer_ID" hidden />
                             <span asp-validation-for="Freelancer_ID" class="text-danger"></span>
                         </div>
+
                         <div class="col-sm-4"></div>
-                        <div class="col-sm-11"></div>
-                        <div class="col-sm-1">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                        <div class="form-group">
+                            <label asp-for="Deliver_File_Path" class="control-label" hidden></label>
+                            <input asp-for="Deliver_File_Path" class="form-control" id="targetDeliverFilePath" value="0" hidden />
+                            <span asp-validation-for="Deliver_File_Path" class="text-danger" hidden></span>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-11"></div>
+                            <div class="col-sm-1 mt-4">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </form>
                     </div>
-                </form>
+
+                </div>
+                
             </div>
         </div>
-    </div>
 </div>
 <div class="container">
-    <button class="btn btn-outline-dark btn-primary" type="button"><a class="text-light" asp-action="Index">Back to List</a></button>
+    <div class="row">
+        <div class="col-sm-10"></div>
+        <div class="col-sm-2">
+            <button class="btn btn-outline-dark btn-primary" type="button"><a class="text-light" asp-action="Index">Back to List</a></button>
+    </div>
 </div>
 
+
+
+<style type="text/css">
+    .likecontainer {
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 30px;
+        background-color: #ffffff;
+    }
+</style>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     

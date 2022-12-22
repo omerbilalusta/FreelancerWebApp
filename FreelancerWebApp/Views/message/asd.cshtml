@@ -1,0 +1,77 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<FreelancerWebApp.Models.message>
+
+<div class="container">
+    <div>
+        @{
+            var counter = Model.Last();
+        }
+        @foreach (var item in Model)
+        {
+            <div class="likecontainer mt-5">
+               @* <p>Message ID: @item.Id</p>*@
+                <div class="row">
+                    <div class="col">
+                        <p>message Owner: @item.userId</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <p class="m-2">@item.message_text</p>
+                    </div>
+                    <div class="col-4">
+                        @*<p>Date: @item.date_created</p>*@
+                        <h6 class="text-muted text-sm-end">
+                            Created at
+                            <strong>
+                                @if (item.date_created.ToString().Length < 20)
+                                {
+                                    <text>@item.date_created.ToString().Substring(0,16)</text>
+                                }
+                                else
+                                {
+                                    <text>@item.date_created Failure</text>
+                                }
+                            </strong>
+                        </h6>
+                    </div>
+                </div>
+                @if (item == counter)
+                {
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div clsss="col-4">
+                            <button class="btn btn-outline-success btn-sm mt-5"><a class="nav-link text-black" asp-area="" asp-controller="message" asp-action="_messagePartial" asp-route-id="@item.inboxId">Text</a></button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+
+    @*@ViewBag.user*@
+</div>
+
+@*<div>
+    <partial name="_messagePartial"/>
+</div>*@
+
+@*<div>
+    Send Message <a asp-action=""></a>
+
+</div>*@
+
+<style type="text/css">
+    .likecontainer {
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 30px;
+        background-color: #ffffff;
+    }
+</style>

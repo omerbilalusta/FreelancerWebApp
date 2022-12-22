@@ -9,25 +9,41 @@ using FreelancerWebApp.Data;
 using FreelancerWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using AutoMapper;
+using FreelancerWebApp.ViewModels;
+using Microsoft.Extensions.FileProviders;
 
 namespace FreelancerWebApp.Controllers
 {
     public class jobsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _env;
+        public static string filepaths = "asd";
+        private readonly IMapper _mapper;
+        private readonly IFileProvider _fileProvider;
 
-        public jobsController(ApplicationDbContext context)
+        public jobsController(ApplicationDbContext context, IHostingEnvironment env, IMapper mapper, IFileProvider fileProvider)
         {
             _context = context;
+            _env = env;
+            _mapper = mapper;
+            _fileProvider = fileProvider;
         }
 
         // GET: jobs
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             //var claimsIdentity = (ClaimsIdentity)User.Identity;
             //var userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             //Console.WriteLine(userName);
-            return View(await _context.job.ToListAsync());
+
+            var Job = _context.job.ToList();
+
+            return View(_mapper.Map<List<JobViewModel>>(Job));
         }
 
 
@@ -52,12 +68,17 @@ namespace FreelancerWebApp.Controllers
 
             var job = await _context.job
                 .FirstOrDefaultAsync(m => m.Id == id);
+            var jobb = await _context.job.FindAsync(id);
             if (job == null)
             {
                 return NotFound();
             }
             ViewBag.userid = User.Identity.Name;
-            return View(job);
+
+            var JobMapped = _mapper.Map<JobViewModel>(jobb);
+
+
+            return View(JobMapped);
         }
 
         // GET: jobs/Create
@@ -66,6 +87,13 @@ namespace FreelancerWebApp.Controllers
         {
             //ViewData("UserId");
             ViewBag.userid = User.Identity.Name;
+            ViewBag.datenow = DateTime.UtcNow;
+            ViewBag.ColorSet = new SelectList(new List<categorySelectList>()
+            {
+                new(){Data="Graphic Design", Value="GraphicDesign"},
+                new(){Data="Text", Value="Text"},
+                new(){Data="Software", Value="Software"}
+            }, "Value", "Data");
             return View();
         }
 
@@ -75,21 +103,47 @@ namespace FreelancerWebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID")] job job)
+        public async Task<IActionResult> Create(JobAddViewModel newJob)
         {
+           
+
             if (ModelState.IsValid)
             {
-                _context.Add(job);
+                var root = _fileProvider.GetDirectoryContents("wwwroot");
+                var UploadedFile = root.First(x => x.Name == "JobPhotos");
+                var randomFileName = Guid.NewGuid() + Path.GetExtension(newJob.JobImage.FileName);
+                var path = Path.Combine(UploadedFile.PhysicalPath, randomFileName);
+                using var stream = new FileStream(path, FileMode.Create);
+
+                newJob.JobImage.CopyTo(stream);
+
+                var JobDone = _mapper.Map<job>(newJob);
+
+                JobDone.Job_Photo_Path = randomFileName;
+
+                _context.Add(JobDone);
                 await _context.SaveChangesAsync();
+                TempData["status"] = "Job published successfully";
                 return RedirectToAction(nameof(Index));
             }
-            return View(job);
+            return View(newJob);
         }
 
         // GET: jobs/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
+            var existJob = _context.job.Find(id);
+
+            ViewBag.ColorSet = new SelectList(new List<categorySelectList>()
+            {
+                new(){Data="Graphic Design", Value="GraphicDesign"},
+                new(){Data="Text", Value="Text"},
+                new(){Data="Software", Value="Software"}
+            }, "Value", "Data",existJob.Job_Category);
+
+
+
             if (id == null || _context.job == null)
             {
                 return NotFound();
@@ -110,7 +164,7 @@ namespace FreelancerWebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID")] job job)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID,Deliver_File_Path")] job job)
         {
             if (id != job.Id)
             {
@@ -123,6 +177,7 @@ namespace FreelancerWebApp.Controllers
                 {
                     _context.Update(job);
                     await _context.SaveChangesAsync();
+                    TempData["status"] = "Job updated successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -139,6 +194,89 @@ namespace FreelancerWebApp.Controllers
             }
             return View(job);
         }
+
+        // GET: jobs/Deliver/5
+        [Authorize]
+        public async Task<IActionResult> Deliver(int? id)
+        {
+            
+            if (id == null || _context.job == null)
+            {
+                return NotFound();
+            }
+
+            var job = await _context.job.FindAsync(id);
+            if (job == null)
+            {
+                return NotFound();
+            }
+            ViewBag.userid = User.Identity.Name;
+
+            var asd = _context.job.Find(id);
+
+            return View(_mapper.Map<JobViewModel>(asd));
+            //return View(job);
+        }
+
+
+
+        //public IActionResult UploadDone(int id, IFormFile fileUploadinput, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID,Deliver_File_Path")] job job)
+        // POST: jobs/Deliver/5
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UploadDone(int id, JobViewModel job)
+        {
+            //string uniqueFileName = null;
+            //var dir = _env.ContentRootPath + "\\wwwroot\\UploadedFiles";
+            //uniqueFileName = Guid.NewGuid().ToString() + "_" + fileUploadinput.FileName;
+            //using (var fileStream = new FileStream(Path.Combine(dir, uniqueFileName), FileMode.Create, FileAccess.Write))
+            //{
+            //    fileUploadinput.CopyTo(fileStream);
+            //}
+
+            //job.Deliver_File_Path = Path.Combine(dir, uniqueFileName);
+
+            var root = _fileProvider.GetDirectoryContents("wwwroot");
+            var UploadedFile = root.First(x => x.Name == "UploadedFiles");
+            var randomFileName = Guid.NewGuid() + Path.GetExtension(job.File.FileName);
+            var path = Path.Combine(UploadedFile.PhysicalPath, randomFileName);
+            using var stream = new FileStream(path, FileMode.Create);
+
+            job.File.CopyTo(stream);
+
+            var JobDone = _mapper.Map<job>(job);
+            JobDone.Deliver_File_Path = randomFileName;
+
+            if (id != job.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(JobDone);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!jobExists(job.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
+
 
         // GET: jobs/getJob/5
         [Authorize]
@@ -164,7 +302,7 @@ namespace FreelancerWebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> getJob(int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID")] job job)
+        public async Task<IActionResult> getJob(int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID,Deliver_File_Path")] job job)
         {
             if (id != job.Id)
             {
@@ -231,6 +369,24 @@ namespace FreelancerWebApp.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Delivery(int ?id)
+        {
+            if (id == null || _context.job == null)
+            {
+                return NotFound();
+            }
+
+            var job = await _context.job.FindAsync(id);
+            if (job == null)
+            {
+                return NotFound();
+            }
+            ViewBag.userid = User.Identity.Name;
+
+            return View(job);
         }
 
         private bool jobExists(int id)

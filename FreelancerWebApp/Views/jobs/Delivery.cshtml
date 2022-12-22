@@ -1,0 +1,64 @@
+﻿@model FreelancerWebApp.Models.job
+
+@{
+    ViewData["Title"] = "Delivery";
+}
+
+
+<div class="container">
+    <h3 class="text-center">Delivery</h3>
+    <div class="container px-3" style="padding: 1% 0% 0% 0%">
+        <div class="customcontainer bg-light">
+        <div class="row gx-5 py-3">
+        <div class="col-lg-5 mb-5 mb-lg-0 my-3"> 
+            <div class="container">
+                <h3>@Html.DisplayFor(model => model.Job_Title) ~ @Html.DisplayFor(model => model.Job_Category)</h3>
+            </div class="container">
+
+            <div class="container my-5">
+                <p>@Html.DisplayFor(model => model.Job_Description)</p>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div class="row my-2 px-5">
+                <div class="col-sm-6 px-2 my-2">
+                    <p> Award: <span class="text-success">@Html.DisplayFor(model => model.Offered_Price)$</span></p>
+                </div>
+
+                <div class="col-sm-6 px-2 my-2">
+                    <p>Remaning Day <span class=text-danger>@Html.DisplayFor(model => model.Day)</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-7 mb-5 mb-lg-0 my-3">
+            <div class="container py-5">
+                <div class="py-5 mb-4">
+                    <div class="row py-3">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4"><a src="/UploadedFiles/@(Model.Deliver_File_Path)">Download Delivery</a></div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                </div>
+
+                <div class="row py-3">
+                    <div class="col-sm-7"></div>
+                    <div class="col-sm-5"><button class="btn btn-outline-danger" name="revision">Request Revision</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<style type="text/css">
+
+    .customcontainer {
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 30px;
+        background-color: #ffffff;
+    }
+</style>

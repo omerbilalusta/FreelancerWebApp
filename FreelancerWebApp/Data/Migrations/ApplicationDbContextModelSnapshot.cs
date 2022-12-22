@@ -22,6 +22,50 @@ namespace FreelancerWebApp.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("FreelancerWebApp.Models.inbox", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("last_message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("last_user_sent_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("last_user_sent_id");
+
+                    b.ToTable("inbox", (string)null);
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.inbox_participants", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("inboxId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("inboxId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("inbox_participants", (string)null);
+                });
+
             modelBuilder.Entity("FreelancerWebApp.Models.job", b =>
                 {
                     b.Property<int>("Id")
@@ -29,6 +73,15 @@ namespace FreelancerWebApp.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Deliver_File_Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Freelancer_ID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Job_Category")
                         .IsRequired()
@@ -38,6 +91,9 @@ namespace FreelancerWebApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Job_Photo_Path")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Job_Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -45,18 +101,85 @@ namespace FreelancerWebApp.Data.Migrations
                     b.Property<int>("Offered_Price")
                         .HasColumnType("int");
 
-                    b.Property<int>("Day")
+                    b.Property<string>("Owner_ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Publish_Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("job", (string)null);
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Owner_ID")
-                        .HasColumnType("nvarchar(50)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Freelancer_ID")
+                    b.Property<DateTime>("date_created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("inboxId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("message_text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("job");
+                    b.HasIndex("inboxId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("message", (string)null);
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("profile", (string)null);
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.user", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("user_email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("user_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("user", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -259,6 +382,51 @@ namespace FreelancerWebApp.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.inbox", b =>
+                {
+                    b.HasOne("FreelancerWebApp.Models.user", "user")
+                        .WithMany()
+                        .HasForeignKey("last_user_sent_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.inbox_participants", b =>
+                {
+                    b.HasOne("FreelancerWebApp.Models.inbox", "inbox")
+                        .WithMany()
+                        .HasForeignKey("inboxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FreelancerWebApp.Models.user", "user")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("inbox");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.message", b =>
+                {
+                    b.HasOne("FreelancerWebApp.Models.inbox", "inbox")
+                        .WithMany()
+                        .HasForeignKey("inboxId");
+
+                    b.HasOne("FreelancerWebApp.Models.user", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
+
+                    b.Navigation("inbox");
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

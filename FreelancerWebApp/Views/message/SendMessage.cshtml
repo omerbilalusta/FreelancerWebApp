@@ -1,0 +1,44 @@
+﻿
+
+
+
+@model IEnumerable<FreelancerWebApp.Models.message>
+
+
+@{
+    ViewData["Title"] = "Message";
+}
+
+
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Message ID</th>
+                <th scope="col">Message Owner</th>
+                <th scope="col">User-MessageSent</th>
+                <th scope="col">Message</th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.message_text)</td>
+                        @*<td>@Html.DisplayFor(modelItem => item.message_text)</td>
+                        <td>@Html.DisplayFor(modelItem => item.date_created)</td>*@
+                    </tr>
+                }
+        </tbody>
+    </table>
+</div>
+
+<partial name="_messagePartial" />
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+﻿
+@model FreelancerWebApp.Models.job
+
+
+<div class="container">
+    <form asp-controller="Home" asp-action="UploadDone" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+            <input type="number" name="jobNo"/>
+        </div>
+        <div class="form-group">
+            <input type="file" name="fileUploadinput"/>
+        </div>
+        <div class="form-group">
+            <button type="submit">Deliver</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

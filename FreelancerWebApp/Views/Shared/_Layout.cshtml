@@ -3,14 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - FreelancerWebApp</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FreelancerWebApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/jumbotron/">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
 </head>
 <body>
     <header>
@@ -26,14 +31,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-black" asp-area="" asp-controller="jobs" asp-action="Index">Jobs</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-black" asp-area="" asp-controller="jobs" asp-action="ShowSearchForm">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" asp-area="" asp-controller="message" asp-action="Index">Message</a>
                         </li>
                     </ul>
 
@@ -43,7 +54,7 @@
         </nav>
     </header>
     <div>
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" style="padding-top:2%;">
             @RenderBody()
         </main>
     </div>

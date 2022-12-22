@@ -1,0 +1,72 @@
+﻿@using FreelancerWebApp.ViewModels
+
+@model MessageListPartialViewModel
+
+
+@*<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Message</th>
+            <th>Message Sender</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Messages)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.message_text</td>
+                <td>@item.userId</td>
+                <td>@item.date_created</td>
+            </tr>
+        }
+    </tbody>
+</table>*@
+
+@foreach (var item in Model.Messages)
+{
+    <div class="likecontainer mt-2">
+        <div class="row">
+            <div classc="col">
+                <p>Message Owner: @item.userId</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <p class="mt-2">@item.message_text</p>
+            </div>
+            <div class="col-4">
+                <h6 class="text-muted text-sm-end">
+                    Created at
+                    <strong>
+                        @if(item.date_created.ToString().Length<20)
+                        {
+                            <text>@item.date_created.ToString().Substring(0,16)</text>
+                        }
+                        else
+                        {
+                            <text>@item.date_created Failure</text>
+                        }
+                    </strong>
+                </h6>
+            </div>
+        </div>
+    </div>
+}
+@*@foreach (var item in ViewBag.userEmail)
+{
+    @item.
+}*@
+
+
+<style type="text/css">
+    .likecontainer {
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 30px;
+        background-color: #ffffff;
+    }
+</style>

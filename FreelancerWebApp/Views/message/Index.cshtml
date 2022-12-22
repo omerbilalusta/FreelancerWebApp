@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Message";
+}
+
+@model IEnumerable<FreelancerWebApp.Models.inbox>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Message ID</th>
+                <th scope="col">Last Message</th>>
+                <th scope="col">Message Sender</th>
+                <th>SendMessage</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                //var Modell = Model.Where(i => i.inbox.Id == 55);
+                //var asd = Model.Where(i => i.inbox.Id == 1);
+            }
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.last_message</td>
+                    <td>@item.last_user_sent_id</td>
+                    <td><a class="nav-link text-black" asp-area="" asp-controller="message" asp-action="_messagePartial" asp-route-id="@item.Id">Go To Chat</a></td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+</div>

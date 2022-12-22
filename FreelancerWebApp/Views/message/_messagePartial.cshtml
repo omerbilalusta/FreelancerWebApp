@@ -1,0 +1,104 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model FreelancerWebApp.Models.message
+
+
+
+<div class="container">
+    <div>
+        <partial name="~/PartialViews/_messageListPartialView.cshtml" model="@ViewBag.messageListPartialViewModell" />
+    </div>
+
+    <div class="likecontainer mt-3">
+        <form asp-action="_messagePartial">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" value="0"/>
+            <div class="row">
+                <div class="col-3 my-3">
+                    <label asp-for="message_text" class="control-label">Message</label>
+                </div>
+                <div class="col-6 my-1">
+                    <textarea asp-for="message_text" class="form-control" style="height:72px">Type message..</textarea>
+                    <span asp-validation-for="message_text" class="text-danger"></span>
+                </div>
+                <div class="col-3 "></div>
+                <div class="col-6">
+                    <input type="hidden" asp-for="inboxId" class="form-control" value="@ViewBag.inboxId" />
+                    <span asp-validation-for="inboxId" class="text-danger"></span>
+                </div>
+                <div class="col-3 "></div>
+                <div class="col-6">
+                    <input type="hidden" asp-for="inbox" class="form-control" value="@ViewBag.Id" />
+                    <span asp-validation-for="inbox" class="text-danger"></span>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <input type="hidden" asp-for="user" class="form-control" value="@ViewBag.userId"/>
+                    <span asp-validation-for="user" class="text-danger"></span>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <input type="hidden" asp-for="userId" class="form-control" value="@ViewBag.userId"/>
+                    <span asp-validation-for="userId" class="text-danger"></span>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <input type="text" asp-for="date_created" class="form-control" value="@ViewBag.date" hidden />
+                    <span asp-validation-for="date_created" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10"> </div>
+                <div class="col-2">
+                    <input type="submit" value="Send" class="btn btn-success" />
+                </div>
+            </div>
+            <!-- date_Created alanı backend tarafında otomatik olarak verilmeli  -->
+        </form>
+
+
+        @*<p>@ViewBag.userId</p>
+        <p>@ViewBag.userIdd</p>
+        <p>@ViewBag.userName</p>
+        <p>@ViewBag.userNamed</p>
+        <p>@ViewBag.message</p>
+        <p>@ViewBag.messageId</p>
+        <p>@ViewBag.count</p>
+        <p>@ViewBag.blog / asd</p>*@
+        @*@foreach (var item in ViewBag.blog)
+        {
+            <p>message ID: @item.Id</p>
+            <p>message: @item.message_text</p>
+        }
+        @foreach (var item in ViewBag.inboxes)
+        {
+            <p>inbox_ID: @item.Id</p>
+            <p>Last sent user id: @item.last_user_sent_id</p>
+        }
+        @foreach (var item in ViewBag.inbox_participants)
+        {
+            <p>inbox_participants ID: @item.Id</p>
+        }
+        @foreach (var item in ViewBag.users)
+        {
+            <p>User ID: @item.Id</p>
+            <p>user email: @item.user_email</p>
+        }
+        <p>@ViewBag.username</p>*@
+
+    </div>
+</div>
+
+
+
+<style type="text/css">
+    .likecontainer {
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 30px;
+        background-color: #ffffff;
+    }
+</style>
