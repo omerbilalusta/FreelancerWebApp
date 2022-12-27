@@ -10,5 +10,6 @@
         public string? message_text { get; set; }
         public DateTime date_created { get; set; }
         public int? userId { get; set; }
+        public string userEmail { get; set; }
     }
 }

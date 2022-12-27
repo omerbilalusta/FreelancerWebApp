@@ -1,0 +1,48 @@
+﻿<div class="container">
+    @if (TempData["status"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["status"]
+        </div>
+    }
+    <div class="likecontainer">
+        <form asp-controller="message" asp-action="createChat">
+            <div class="row">
+                <div class="col-3 my-1">
+                    <label>Receiver of message</label>
+                </div>
+                <div class="col-9 my-2">
+                    <input name="name" placeholder="Start Chat with ..." />
+                </div>
+                @*<select asp-items="@ViewBag.userList" class="form-select">
+                    <option value="">Select Category </option>
+                </select>*@
+            </div>
+            <div class="row">
+                <div class="col-3 my-1">
+                    <label>Message: </label>
+                </div>
+                <div class="col-9 my-2">
+                    <textarea name="message" placeholder="Your message.." style="height:100px; width:500px;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10"></div>
+                <div class="col-2">
+                    <input type="submit" value="Send" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<style type="text/css">
+    .likecontainer {
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 30px;
+        background-color: #ffffff;
+    }
+</style>

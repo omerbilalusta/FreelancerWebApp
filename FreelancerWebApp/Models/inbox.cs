@@ -10,6 +10,7 @@ namespace FreelancerWebApp.Models
 
         [ForeignKey("last_user_sent_id")]
         public virtual user user { get; set; }
+        public int? last_receiver_user_id { get; set; }
 
         public inbox()
         {

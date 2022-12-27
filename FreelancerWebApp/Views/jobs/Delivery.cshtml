@@ -36,9 +36,13 @@
             <div class="container py-5">
                 <div class="py-5 mb-4">
                     <div class="row py-3">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4"><a src="/UploadedFiles/@(Model.Deliver_File_Path)">Download Delivery</a></div>
-                        <div class="col-sm-4"></div>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-outline-success">
+                                <a class="nav-link text-success" href="/UploadedFiles/@(Model.Deliver_File_Path)" download>Download Delivery</a>
+                            </button>
+                        </div>
+                        <div class="col-sm-3"></div>
                     </div>
                 </div>
 

@@ -14,6 +14,7 @@ namespace FreelancerWebApp.Models
         public int userId { get; set; }
         [ForeignKey("userId")]
         public virtual user? user { get; set; }
+        public string? userEmail { get; set; }
 
 
         public message()

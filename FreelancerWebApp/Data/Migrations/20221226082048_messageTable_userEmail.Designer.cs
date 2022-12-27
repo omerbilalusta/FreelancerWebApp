@@ -4,6 +4,7 @@ using FreelancerWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreelancerWebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221226082048_messageTable_userEmail")]
+    partial class messageTable_userEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +34,6 @@ namespace FreelancerWebApp.Data.Migrations
 
                     b.Property<string>("last_message")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("last_receiver_user_id")
-                        .HasColumnType("int");
 
                     b.Property<int>("last_user_sent_id")
                         .HasColumnType("int");

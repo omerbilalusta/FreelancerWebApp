@@ -15,6 +15,8 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using AutoMapper;
 using FreelancerWebApp.ViewModels;
 using Microsoft.Extensions.FileProviders;
+using System.Web;
+
 
 namespace FreelancerWebApp.Controllers
 {
@@ -37,10 +39,6 @@ namespace FreelancerWebApp.Controllers
         // GET: jobs
         public IActionResult Index()
         {
-            //var claimsIdentity = (ClaimsIdentity)User.Identity;
-            //var userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            //Console.WriteLine(userName);
-
             var Job = _context.job.ToList();
 
             return View(_mapper.Map<List<JobViewModel>>(Job));
@@ -98,8 +96,6 @@ namespace FreelancerWebApp.Controllers
         }
 
         // POST: jobs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -159,8 +155,6 @@ namespace FreelancerWebApp.Controllers
         }
 
         // POST: jobs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -388,6 +382,27 @@ namespace FreelancerWebApp.Controllers
 
             return View(job);
         }
+        //[HttpPost]
+        //public ActionResult DownloadFile(string filePath)
+        //{
+        //    // Dosya yolunu doğrulayın ve dosya mevcut olduğundan emin olun
+        //    if (string.IsNullOrEmpty(filePath) || !System.IO.File.Exists(filePath))
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    // HttpResponse nesnesini oluşturun ve öznitelikleri ayarlayın
+        //    var response = new HttpResponse();
+        //    response.Clear();
+        //    response.ContentType = "application/octet-stream";
+        //    response.AddHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(filePath));
+        //    response.WriteFile(filePath);
+        //    response.End();
+
+        //    return new EmptyResult();
+        //}
+
+
 
         private bool jobExists(int id)
         {

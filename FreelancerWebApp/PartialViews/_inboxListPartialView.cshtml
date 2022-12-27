@@ -1,0 +1,51 @@
+﻿@using FreelancerWebApp.ViewModels
+
+@model InboxListViewModel
+@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+
+<style>
+    .inbox {
+        height: 700px; /* Mesajların gösterileceği alanın yüksekliğini belirtin */
+        overflow-y: scroll; /* Kaydırma çubuğu oluşturun */
+    }
+</style>
+<div class="inbox">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Inbox ID</th>
+                <th scope="col">Last Sender</th>
+                <th scope="col">Last Message</th>>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                //var Modell = Model.Where(i => i.inbox.Id == 55);
+                //var asd = Model.Where(i => i.inbox.Id == 1);
+            }
+
+            @foreach (var item in Model.Inboxes)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.last_message_sender_name</td>
+                    <td>
+                        @if (@item.last_message.ToString().Length > 20)
+                        {
+                            <text>@item.last_message.ToString().Substring(0,20)</text>
+                        }
+                        else
+                        {
+                            <text>@item.last_message</text>
+                        }
+                    </td>
+                    <td><button class="btn btn-sm btn-outline-warning"> <a class="nav-link text-black" asp-controller="message" asp-action="_messagePartial" asp-route-id="@item.Id">Go to Chat</a></button></td>
+                    
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
