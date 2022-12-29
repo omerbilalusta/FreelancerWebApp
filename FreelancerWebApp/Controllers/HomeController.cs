@@ -81,6 +81,10 @@ namespace FreelancerWebApp.Controllers
         [Authorize]
         public async Task<IActionResult> Profile()
         {
+            var userEmail = User.Identity.Name;
+            var user = _context.user.FirstOrDefault(x => x.user_email == userEmail);
+            ViewBag.userName = user.user_name;
+            ViewBag.UserEmail = user.user_email;
             ViewBag.userid = User.Identity.Name;
             return View(await _context.job.ToListAsync());
         }

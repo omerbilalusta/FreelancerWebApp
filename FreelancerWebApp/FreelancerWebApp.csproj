@@ -36,7 +36,6 @@
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
     <Folder Include="wwwroot\lib\qrCode\" />
-    <Folder Include="wwwroot\JobPhotos\" />
     <Folder Include="wwwroot\UploadedFiles\" />
     <Folder Include="wwwroot\Photos\" />
   </ItemGroup>

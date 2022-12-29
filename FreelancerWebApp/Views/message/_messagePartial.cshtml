@@ -1,62 +1,81 @@
 ﻿@model FreelancerWebApp.Models.message
 
+<script type="text/javascript">
+    $(div1).on('load', function () {
+        console.log("asd");
+        var objDiv = document.getElementById("div1");
+        objDiv.scrollTop = objDiv.scrollHeight;
+
+    });
+
+    function asd() {
+        console.log("asd");
+    }
+    $(div1).on('load', asd());
+</script>
 
 
-<div class="" style="padding:0% 25% 0% 25%;">
-    <div class="conversation">
-        <div>
-            <partial name="~/PartialViews/_messageListPartialView.cshtml" model="@ViewBag.messageListPartialViewModell" />
+<div class="container">
+    <div class="likecontainer">
+        <div class="conversation" style="">
+            <div class="" onload="asd();">
+                <div class="conversation-compose">
+                    <partial name="~/PartialViews/_messageListPartialView.cshtml" model="@ViewBag.messageListPartialViewModell" />
+                </div>
+            </div>
+            <div class="likecontainer mt-3">
+                <form asp-action="_messagePartial">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" value="0" />
+                    <div class="row">
+                        <div class="col-3 my-3">
+                            <label asp-for="message_text" class="control-label">Message</label>
+                        </div>
+                        <div class="col-6 my-1">
+                            <input asp-for="message_text" class="input-msg" placeholder="Type here..." style="width:250px;">
+                            <span asp-validation-for="message_text" class="text-danger"></span>
+                        </div>
+                        <div class="col-3 "></div>
+                        <div class="col-6">
+                            <input type="hidden" asp-for="inboxId" class="form-control" value="@ViewBag.inboxId" />
+                            <span asp-validation-for="inboxId" class="text-danger"></span>
+                        </div>
+                        <div class="col-3 "></div>
+                        <div class="col-6">
+                            <input type="hidden" asp-for="inbox" class="form-control" value="@ViewBag.Id" />
+                            <span asp-validation-for="inbox" class="text-danger"></span>
+                        </div>
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <input type="hidden" asp-for="user" class="form-control" value="@ViewBag.userId" />
+                            <span asp-validation-for="user" class="text-danger"></span>
+                        </div>
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <input type="hidden" asp-for="userId" class="form-control" value="@ViewBag.userId" />
+                            <span asp-validation-for="userId" class="text-danger"></span>
+                        </div>
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <input type="text" asp-for="date_created" class="form-control" value="@ViewBag.date" hidden />
+                            <span asp-validation-for="date_created" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"> </div>
+                        <div class="col-2">
+                            <input type="submit" value="Send" class="btn btn-success" />
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="likecontainer mt-3">
-        <form asp-action="_messagePartial">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" value="0" />
-            <div class="row">
-                <div class="col-3 my-3">
-                    <label asp-for="message_text" class="control-label">Message</label>
-                </div>
-                <div class="col-6 my-1">
-                    <input asp-for="message_text" class="input-msg" placeholder="Type here...">
-                    <span asp-validation-for="message_text" class="text-danger"></span>
-                </div>
-                <div class="col-3 "></div>
-                <div class="col-6">
-                    <input type="hidden" asp-for="inboxId" class="form-control" value="@ViewBag.inboxId" />
-                    <span asp-validation-for="inboxId" class="text-danger"></span>
-                </div>
-                <div class="col-3 "></div>
-                <div class="col-6">
-                    <input type="hidden" asp-for="inbox" class="form-control" value="@ViewBag.Id" />
-                    <span asp-validation-for="inbox" class="text-danger"></span>
-                </div>
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <input type="hidden" asp-for="user" class="form-control" value="@ViewBag.userId" />
-                    <span asp-validation-for="user" class="text-danger"></span>
-                </div>
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <input type="hidden" asp-for="userId" class="form-control" value="@ViewBag.userId" />
-                    <span asp-validation-for="userId" class="text-danger"></span>
-                </div>
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <input type="text" asp-for="date_created" class="form-control" value="@ViewBag.date" hidden />
-                    <span asp-validation-for="date_created" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-10"> </div>
-                <div class="col-2">
-                    <input type="submit" value="Send" class="btn btn-success" />
-               </div>
-            </div>
-        </form>
-    </div>
+    
 </div>
 
-<div class="container mt-3">
+
+<div class="container mt-3" onload="asd()">
     <div class="row">
         <div class="col-9"></div>
         <div class="col-3">
@@ -75,11 +94,11 @@
         background-color: #ffffff;
     }
 
-    /*.conversation {
+    .conversation {
         height: calc(100% - 12px);
         position: relative;
         z-index: 0;
-        background: #efe7dd url("https://cloud.githubusercontent.com/assets/398893/15136779/4e765036-1639-11e6-9201-67e728e86f39.jpg") repeat;
+       /* background: #efe7dd url("https://cloud.githubusercontent.com/assets/398893/15136779/4e765036-1639-11e6-9201-67e728e86f39.jpg") repeat;*/
         
     }
 
@@ -110,5 +129,7 @@
                 content: "";
                 display: table;
                 clear: both;
-            }*/
+            }
 </style>
+
+

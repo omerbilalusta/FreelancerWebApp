@@ -3,13 +3,31 @@
 @{
     ViewData["Title"] = "Profile";
 }
+<style type="text/css">
+    .customcontainer {
+        padding: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 30px;
+        background-color: #ffffff
+    }
+</style>
+
+<script>
+    function showModal(id) {
+        $('#' + id).modal('show');
+    };
+
+    function hideModal(id) {
+        $('#' + id).modal('hide');
+    };
+</script>
 
 <header @*class="bg-dark py-2"*@ style="background-color:#285238;">
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto " style="color:#ffbb33;">
                 <h2 class="text-center fw-bolder py-3">Welcome To Your Profile </h2>
-                <h3 class="text-light">@ViewBag.userid</h3>
+                <h3 class="text-light">@ViewBag.userName</h3>
             </div>
         </div>
     </section>
@@ -27,11 +45,13 @@
                     <div class="card shadow-sm customcontainer bg-light">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 
-                        @*<div class="card-body">
-                        </div>*@
+                        <div class="card-body my-3">
+                            <p><strong>Name: </strong>@ViewBag.userName</p>
+                            <p><strong>E-mail: </strong>@ViewBag.userEmail</p>
+                        </div>
                     </div>
+                    
                 </div>
-                
             </div>
             <div class=" col-lg-9 mb-5 mb-lg-0">
                 @*<div>
@@ -57,7 +77,8 @@
 
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="btn-group">
-                                                        <a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>
+                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
                                                     </div>
                                                     <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
                                                     <div class="btn-group">
@@ -81,7 +102,8 @@
 
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="btn-group">
-                                                        <a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>
+                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm"  data-bs-toggle="modal" data-bs-target="modalContent">View</button>
                                                     </div>
                                                     <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
                                                     <div class="btn-group">
@@ -114,7 +136,8 @@
 
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="btn-group">
-                                                        <a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>
+                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm"  data-bs-toggle="modal" data-bs-target="modalContent">View</button>
                                                     </div>
                                                     <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
                                                     <!---->
@@ -150,7 +173,9 @@
 
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="btn-group">
-                                                        <a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>
+                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm"  data-bs-toggle="modal" data-bs-target="modalContent">View</button>
+
                                                     </div>
                                                     <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
                                                     <!---->
@@ -169,15 +194,63 @@
                     </div>
                 </div>
             </div>
+            <div class=" col-lg-0 mb-5 mb-lg-0 py-5 my-5"></div>
         </div>
     </div>
 </div>
 
-<style type="text/css">
-    .customcontainer {
-        padding: 30px;
-        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
-        border-radius: 30px;
-        background-color: #ffffff
-    }
-</style>
+@foreach (var item in Model)
+{
+    <div id="@item.Id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Job Details</h5>
+                </div>
+                <div class="modal-body">
+                    <h4>Title: @item.Job_Title</h4>
+                    <h6>Category: @item.Job_Category</h6>
+                    <p class="my-3">@item.Job_Description</p>
+                    <br />
+                    <br />
+
+                    <p>Award will be <strong class="text-success">@item.Offered_Price$</strong></p>
+                    <p>Complete in <strong class="text-danger">@item.Day</strong> days</p>
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-3">
+                            <h6>Created By:</h6>
+                        </div>
+                        <div class="col-3">
+                            <p>@item.Owner_ID</p>
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h6>Published at: </h6>
+                        </div>
+                        <div class="col-3">
+                            @if (@item.Publish_Date.ToString().Length < 20)
+                            {
+                                @item.Publish_Date.ToString().Substring(0,10)
+                                ;
+                            }
+                            else
+                            {
+                                @item.Publish_Date.ToString()
+                                ;
+                                <text>Failure</text>
+                            }
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="modalContent" onclick="hideModal(@item.Id)" aria-label=" Close">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

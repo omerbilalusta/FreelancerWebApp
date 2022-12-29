@@ -16,8 +16,8 @@
     <div class="name" style="padding-left:2%;">
         <span>Zeno Rocha</span>
         <span class="status">offline</span>
-    </div>*@
-    @*<div class="actions more">
+    </div>
+    <div class="actions more">
         <i class="zmdi zmdi-more-vert"></i>
     </div>
     <div class="actions attachment">
@@ -25,14 +25,14 @@
     </div>
     <div class="actions">
         <i class="zmdi zmdi-phone"></i>
-    </div>*@
-</div>
-<div class="messages">
+    </div>
+</div>*@
+<div id="div1" class="messages" onload="asd()">
         @foreach (var item in Model.Messages)
         {
             if (item.userEmail == ViewBag.user)
             {
-            <div class="likecontainer mt-2">
+            <div class="message sent  mt-2">
                 <div class="row">
                     <div classc="col">
                         <p>@item.userEmail</p>
@@ -64,17 +64,17 @@
         }
         else
         {
-            <div class="likecontainer mt-2">
+            <div class="message received mt-2">
                 <div class="row">
                     <div classc="col">
                         <p>@item.userEmail</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-6">
                         <p class="mt-2">@item.message_text</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <h6 class="text-muted text-sm-end">
                             @*Created at*@
                             <span class="metadata">
@@ -98,19 +98,31 @@
     </div>
 
 
-
-@*@foreach (var item in ViewBag.userEmail)
-{
-    @item.
-}*@
-
-
 <style type="text/css">
     .likecontainer {
         padding: 2% 5% 5% 1%;
         box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
         border-radius: 30px;
         background-color: #ffffff;
+    }
+    .likecontainer_sent {
+        padding: 2% 5% 5% 1%;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 5px 0px 5px 5px;
+        background-color: #cece37;
+        float:right;
+        border-width: 0px 10px 10px 0;
+        border-color: transparent #02C41C transparent transparent;
+    }
+
+    .likecontainer_received {
+        padding: 2% 5% 5% 1%;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 0px 5px 5px 5px;
+        background-color: #02C41C;
+        float: left;
+        border-width: 0px 10px 10px 0;
+        border-color: transparent #cece37 transparent transparent;
     }
 
     .metadata {
@@ -119,6 +131,7 @@
         padding: 0 0 0 7px;
         position: relative;
         bottom: -4px;
+        
     }
 
         .metadata .time {
@@ -127,13 +140,66 @@
             display: inline-block;
         }
 
-    .conversation {
+    .message.received {
+        background: #cece37;
+        border-radius: 0px 5px 5px 5px;
+        float: left;
+    }
+
+        .message.received .metadata {
+            padding: 0 0 0 16px;
+        }
+
+        .message.received:after {
+            border-width: 0px 10px 10px 0;
+            border-color: transparent #cece37 transparent transparent;
+            top: 0;
+            left: -10px;
+        }
+
+    .message.sent {
+        background: #02C41C;
+        border-radius: 5px 0px 5px 5px;
+        float: right;
+    }
+
+        .message.sent:after {
+            border-width: 0px 0 10px 10px;
+            border-color: transparent transparent transparent #02C41C;
+            top: 0;
+            right: -10px;
+        }
+        .message {
+        color: #000;
+        clear: both;
+        line-height: 18px;
+        font-size: 15px;
+        padding: 8px;
+        position: relative;
+        margin: 8px 0;
+        max-width:85%;
+        
+        word-wrap: break-word;
+        z-index: -1;
+    }
+
+        .message:after {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+
+    
+    /*.conversation {
         height: calc(100% - 12px);
         position: relative;
         background:#ffffff;
-        /*background: #efe7dd url("https://cloud.githubusercontent.com/assets/398893/15136779/4e765036-1639-11e6-9201-67e728e86f39.jpg") repeat;*/
+        background: #efe7dd url("https://cloud.githubusercontent.com/assets/398893/15136779/4e765036-1639-11e6-9201-67e728e86f39.jpg") repeat;
         z-index: 0;
-    }
+    }*/
 
        /* .conversation ::-webkit-scrollbar {
             transition: all 0.5s;

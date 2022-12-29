@@ -20,6 +20,8 @@ namespace FreelancerWebApp.Controllers
         {
             _context = context;
         }
+        
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var inbox = await _context.inbox.ToListAsync();
@@ -46,7 +48,8 @@ namespace FreelancerWebApp.Controllers
 
             return View(await _context.inbox.ToListAsync());
         }
-
+        
+        [Authorize]
         public async Task<IActionResult> SendMessage()
         {
             //return Json("ok");
@@ -115,13 +118,15 @@ namespace FreelancerWebApp.Controllers
 
 
         }
-
+        
+        [Authorize]
         public async Task<IActionResult> asd(int? id)
         {
             
             return View(await _context.message.Where(c => c.inboxId == id).ToListAsync());
         }
 
+        [Authorize]
         public async Task<IActionResult> _messagePartial(int? id)
         {
             ViewBag.user = User.Identity.Name;
@@ -154,7 +159,7 @@ namespace FreelancerWebApp.Controllers
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> _messagePartial(message newMessage)
         {
@@ -256,6 +261,7 @@ namespace FreelancerWebApp.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> createChat([Bind("last_message")] inbox inbox, message? newMessage)
         {
