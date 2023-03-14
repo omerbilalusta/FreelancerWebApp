@@ -4,12 +4,12 @@
 @addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
 
 <style>
-    .inbox {
+    inbox {
         height: 700px; /* Mesajların gösterileceği alanın yüksekliğini belirtin */
         overflow-y: scroll; /* Kaydırma çubuğu oluşturun */
     }
 </style>
-<div class="inbox">
+@*<div class="inbox">
     <table class="table">
         <thead>
             <tr>
@@ -41,11 +41,53 @@
                         }
                     </td>
                     <td><button class="btn btn-sm btn-outline-warning"> <a class="nav-link text-black" asp-controller="message" asp-action="_messagePartial" asp-route-id="@item.Id">Go to Chat</a></button></td>
-                    
+
                 </tr>
             }
 
         </tbody>
     </table>
-</div>
+</div>*@
 
+
+    @{
+        //var Modell = Model.Where(i => i.inbox.Id == 55);
+        //var asd = Model.Where(i => i.inbox.Id == 1);
+    }
+<div style="height: 700px;overflow-y: scroll;">
+    @foreach (var item in Model.Inboxes)
+    {
+        <div class="likecontainer mt-3">
+
+            @*@item.Id*@
+            <div class="row mt-2">
+                <div class="col-10">
+                    <span class="text-danger" style="">Last sender - message:</span>
+                    @if (@item.last_message.ToString().Length > 35)
+                    {
+                        <text><span class="text-primary">@item.last_message_sender_name </span>@item.last_message.ToString().Substring(0,20)...</text>
+                    }
+                    else
+                    {
+                        <text><span class="text-primary">@item.last_message_sender_name </span>@item.last_message</text>
+                    }
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-sm btn-outline-warning mt-3"> <a class="nav-link text-black" asp-controller="message" asp-action="_messagePartial" asp-route-id="@item.Id">Go to Chat</a></button>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+
+   
+
+
+<style type="text/css">
+    .likecontainer {
+        padding: 25px;
+        box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+        border-radius: 30px;
+        background-color: #ffffff;
+    }
+</style>

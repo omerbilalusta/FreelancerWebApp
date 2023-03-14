@@ -7,19 +7,19 @@ namespace FreelancerWebApp.ViewModels
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Title can't be empty.")]
+        [Required(ErrorMessage = "'Title' can't be empty.")]
         public string Job_Title { get; set; }
 
-        [Required(ErrorMessage = "Category should be selected.")]
+        [Required(ErrorMessage = "'Category' should be selected.")]
         public string Job_Category { get; set; }
 
-        [Required(ErrorMessage = "Job description should be filled.")]
+        [Required(ErrorMessage = "'Job Description' should be filled.")]
         public string Job_Description { get; set; }
 
-        [Required(ErrorMessage = "Price should be determined.")]
+        [Required(ErrorMessage = "'Price' should be determined.")]
         public int Offered_Price { get; set; }
 
-        [Required(ErrorMessage = "Day should be determined.")]
+        [Required(ErrorMessage = "'Day' should be determined.")]
         public int Day { get; set; }
 
         public string Owner_ID { get; set; }

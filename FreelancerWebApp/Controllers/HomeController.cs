@@ -38,6 +38,7 @@
 
 using FreelancerWebApp.Data;
 using FreelancerWebApp.Models;
+using FreelancerWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -87,6 +88,51 @@ namespace FreelancerWebApp.Controllers
             ViewBag.UserEmail = user.user_email;
             ViewBag.userid = User.Identity.Name;
             return View(await _context.job.ToListAsync());
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Comment(int? id)
+        {
+            ViewBag.Date = DateTime.Now;
+            ViewBag.jobId = id;
+            return View();
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Comment(Comment Comment)
+        {
+            var job = _context.job.Find(Comment.JobId);
+            var user = _context.user.FirstOrDefault(x => x.user_email == job.Owner_ID);
+            Comment.UserId =user.Id;
+
+            Comment.job = job;
+            Comment.user = user;
+            job.Confirmed = true;
+
+            _context.job.Update(job);
+            await _context.SaveChangesAsync();
+
+            _context.Comment.Add(Comment);
+            await _context.SaveChangesAsync();
+
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Comment.Add(Comment);
+            //    await _context.SaveChangesAsync();
+            //    return View();
+            //}
+            return RedirectToAction("Profile");
+            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeliveryPost(int? id)
+        {
+            var job = _context.job.Find(id);
+            job.Confirmed = true;
+            _context.job.Update(job);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Profile", "Home");
         }
 
         //Get

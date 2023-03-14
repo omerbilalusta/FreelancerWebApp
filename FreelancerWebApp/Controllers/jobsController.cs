@@ -113,11 +113,12 @@ namespace FreelancerWebApp.Controllers
 
                 newJob.JobImage.CopyTo(stream);
 
-                var JobDone = _mapper.Map<job>(newJob);
+                var Job = _mapper.Map<job>(newJob);
 
-                JobDone.Job_Photo_Path = randomFileName;
+                Job.Job_Photo_Path = randomFileName;
 
-                _context.Add(JobDone);
+                Job.Confirmed = false;
+                _context.Add(Job);
                 await _context.SaveChangesAsync();
                 TempData["status"] = "Job published successfully";
                 return RedirectToAction(nameof(Index));
@@ -205,13 +206,12 @@ namespace FreelancerWebApp.Controllers
                 return NotFound();
             }
             ViewBag.userid = User.Identity.Name;
-
+            ViewBag.Date = DateTime.Now;
             var asd = _context.job.Find(id);
 
             return View(_mapper.Map<JobViewModel>(asd));
             //return View(job);
         }
-
 
 
         //public IActionResult UploadDone(int id, IFormFile fileUploadinput, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID,Deliver_File_Path")] job job)
@@ -382,6 +382,7 @@ namespace FreelancerWebApp.Controllers
 
             return View(job);
         }
+
         //[HttpPost]
         //public ActionResult DownloadFile(string filePath)
         //{

@@ -4,6 +4,7 @@ using FreelancerWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreelancerWebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230308111403_comment")]
+    partial class comment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,8 @@ namespace FreelancerWebApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("JobId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -106,9 +109,6 @@ namespace FreelancerWebApp.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool?>("Confirmed")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Day")
                         .HasColumnType("int");
@@ -426,13 +426,13 @@ namespace FreelancerWebApp.Data.Migrations
             modelBuilder.Entity("FreelancerWebApp.Models.Comment", b =>
                 {
                     b.HasOne("FreelancerWebApp.Models.job", "job")
-                        .WithMany()
-                        .HasForeignKey("JobId")
+                        .WithOne("comment")
+                        .HasForeignKey("FreelancerWebApp.Models.Comment", "JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FreelancerWebApp.Models.user", "user")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -540,6 +540,16 @@ namespace FreelancerWebApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.job", b =>
+                {
+                    b.Navigation("comment");
+                });
+
+            modelBuilder.Entity("FreelancerWebApp.Models.user", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,6 @@
-﻿namespace FreelancerWebApp.Models
+﻿using System.ComponentModel;
+
+namespace FreelancerWebApp.Models
 {
     public class job
     {
@@ -23,6 +25,9 @@
         public DateTime Publish_Date { get; set; }
 
         public string? Job_Photo_Path { get; set; }
+        [DefaultValue(false)]
+        public bool? Confirmed { get; set; }
+
 
 
         public job ()

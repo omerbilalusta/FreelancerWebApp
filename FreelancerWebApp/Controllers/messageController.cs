@@ -24,12 +24,12 @@ namespace FreelancerWebApp.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var inbox = await _context.inbox.ToListAsync();
-            var asd = _context.inbox.Count();
-            ViewBag.userCount = asd;
-            ViewBag.user = new SelectList(inbox, "Id", "last_message");
-            ViewBag.userr = new SelectList(inbox, "Id", "last_sent_user_id");
-            ViewBag.userrr = new SelectList(inbox, "Id","Id");
+            //var inbox = await _context.inbox.ToListAsync();
+            //var asd = _context.inbox.Count();
+            //ViewBag.userCount = asd;
+            //ViewBag.user = new SelectList(inbox, "Id", "last_message");
+            //ViewBag.userr = new SelectList(inbox, "Id", "last_sent_user_id");
+            //ViewBag.userrr = new SelectList(inbox, "Id","Id");
             var userEmail = User.Identity.Name;
             var user = _context.user.FirstOrDefault(x => x.user_email == userEmail);
             var inboxes = _context.inbox.OrderBy(x => x.Id).Where(x=>x.last_user_sent_id == user.Id || x.last_receiver_user_id == user.Id).Select(x => new InboxViewModel()

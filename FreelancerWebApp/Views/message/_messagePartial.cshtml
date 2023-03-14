@@ -28,14 +28,16 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" value="0" />
                     <div class="row">
-                        <div class="col-3 my-3">
+                        <div class="col-3">
                             <label asp-for="message_text" class="control-label">Message</label>
                         </div>
-                        <div class="col-6 my-1">
+                        <div class="col-7">
                             <input asp-for="message_text" class="input-msg" placeholder="Type here..." style="width:250px;">
                             <span asp-validation-for="message_text" class="text-danger"></span>
                         </div>
-                        <div class="col-3 "></div>
+                        <div class="col-2 mt-4">
+                            <input type="submit" value="Send" class="btn btn-success" />
+                        </div>
                         <div class="col-6">
                             <input type="hidden" asp-for="inboxId" class="form-control" value="@ViewBag.inboxId" />
                             <span asp-validation-for="inboxId" class="text-danger"></span>
@@ -60,13 +62,14 @@
                             <input type="text" asp-for="date_created" class="form-control" value="@ViewBag.date" hidden />
                             <span asp-validation-for="date_created" class="text-danger"></span>
                         </div>
+                        
                     </div>
-                    <div class="row">
+                    @*<div class="row">
                         <div class="col-10"> </div>
                         <div class="col-2">
                             <input type="submit" value="Send" class="btn btn-success" />
                         </div>
-                    </div>
+                    </div>*@
                 </form>
             </div>
         </div>

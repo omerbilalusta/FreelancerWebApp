@@ -16,5 +16,6 @@ namespace FreelancerWebApp.Data
         public DbSet<FreelancerWebApp.Models.user> user { get; set; }
         public DbSet<FreelancerWebApp.Models.inbox> inbox { get; set; }
         public DbSet<FreelancerWebApp.Models.inbox_participants> inbox_participants { get; set; }
+        public DbSet<FreelancerWebApp.Models.Comment> Comment { get; set; }
     }
 }
