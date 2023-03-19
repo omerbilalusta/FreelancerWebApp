@@ -67,9 +67,20 @@ namespace FreelancerWebApp.Controllers
             _contextjob = contextjob;
         }
 
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(user? user)
         {
+            var asd = User.Identity.Name;
+            if(User.Identity.IsAuthenticated == true)
+            {
+                if(_context.user.FirstOrDefault(x=> x.user_email == asd) == null)
+                {
+                    user.Id = 0;
+                    user.user_email = User.Identity.Name;
+                    user.user_name = "asd";
+                    _context.user.Add(user);
+                    await _context.SaveChangesAsync();
+                }
+            }
             return View(await _context.job.ToListAsync());
         }
 
@@ -142,7 +153,7 @@ namespace FreelancerWebApp.Controllers
             return View(await _context.job.ToListAsync());
         }
 
-        //Post
+        //Post // Kullanılmıyor !!!
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]

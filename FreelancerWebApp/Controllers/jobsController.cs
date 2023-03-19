@@ -205,12 +205,8 @@ namespace FreelancerWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewBag.userid = User.Identity.Name;
-            ViewBag.Date = DateTime.Now;
-            var asd = _context.job.Find(id);
 
-            return View(_mapper.Map<JobViewModel>(asd));
-            //return View(job);
+            return View(_mapper.Map<JobViewModel>(job));
         }
 
 
@@ -221,16 +217,6 @@ namespace FreelancerWebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult UploadDone(int id, JobViewModel job)
         {
-            //string uniqueFileName = null;
-            //var dir = _env.ContentRootPath + "\\wwwroot\\UploadedFiles";
-            //uniqueFileName = Guid.NewGuid().ToString() + "_" + fileUploadinput.FileName;
-            //using (var fileStream = new FileStream(Path.Combine(dir, uniqueFileName), FileMode.Create, FileAccess.Write))
-            //{
-            //    fileUploadinput.CopyTo(fileStream);
-            //}
-
-            //job.Deliver_File_Path = Path.Combine(dir, uniqueFileName);
-
             var root = _fileProvider.GetDirectoryContents("wwwroot");
             var UploadedFile = root.First(x => x.Name == "UploadedFiles");
             var randomFileName = Guid.NewGuid() + Path.GetExtension(job.File.FileName);
