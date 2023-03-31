@@ -5,6 +5,29 @@
 }
 @model JobAddViewModel
 
+@{
+    if (TempData["Credit"] != null)
+    {
+        if (TempData["Credit"].ToString() == "false")
+        {
+            <div class="container">
+                <div class="alert alert-warning">
+                    <div class="row gx-5">
+                        <div class="col-10">
+                            <p>Not Enough Credit. Go First Load Money</p>
+                        </div>
+                        <div class="col-2">
+                            <a class="nav-link" asp-controller="Home" asp-action="Profile">Load Money</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+
+
 <div class="container">
     <div class="row gx-5">
         <div class="col-lg-8 mb-5 mb-lg-0 my-0">

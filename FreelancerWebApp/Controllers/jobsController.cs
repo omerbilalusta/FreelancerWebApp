@@ -101,7 +101,12 @@ namespace FreelancerWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(JobAddViewModel newJob)
         {
-           
+            var Owner_user = _context.user.FirstOrDefault(x=> x.user_email == newJob.Owner_ID);
+           if(Owner_user.Money < newJob.Offered_Price)
+            {
+                TempData["Credit"] = "false";
+                return RedirectToAction(nameof(jobsController.Create));
+            }
 
             if (ModelState.IsValid)
             {
@@ -118,6 +123,7 @@ namespace FreelancerWebApp.Controllers
                 Job.Job_Photo_Path = randomFileName;
 
                 Job.Confirmed = false;
+
                 _context.Add(Job);
                 await _context.SaveChangesAsync();
                 TempData["status"] = "Job published successfully";
@@ -137,7 +143,7 @@ namespace FreelancerWebApp.Controllers
                 new(){Data="Graphic Design", Value="GraphicDesign"},
                 new(){Data="Text", Value="Text"},
                 new(){Data="Software", Value="Software"}
-            }, "Value", "Data",existJob.Job_Category);
+            }, "Value", "Data", existJob.Job_Category);
 
 
 
@@ -159,7 +165,7 @@ namespace FreelancerWebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID,Deliver_File_Path")] job job)
+        public async Task<IActionResult> Edit(int id, job job)
         {
             if (id != job.Id)
             {
@@ -227,6 +233,7 @@ namespace FreelancerWebApp.Controllers
 
             var JobDone = _mapper.Map<job>(job);
             JobDone.Deliver_File_Path = randomFileName;
+            JobDone.Confirmed = false;
 
             if (id != job.Id)
             {

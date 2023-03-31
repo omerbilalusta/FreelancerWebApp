@@ -36,6 +36,7 @@
 
 
 
+using AutoMapper;
 using FreelancerWebApp.Data;
 using FreelancerWebApp.Models;
 using FreelancerWebApp.ViewModels;
@@ -58,13 +59,15 @@ namespace FreelancerWebApp.Controllers
         private readonly ApplicationDbContext _context;
         private IHostingEnvironment _env;
         private readonly ApplicationDbContext _contextjob;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IHostingEnvironment env, ApplicationDbContext contextjob)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IHostingEnvironment env, ApplicationDbContext contextjob, IMapper mapper)
         {
             _logger = logger;
             _context = context;
             _env = env;
             _contextjob = contextjob;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index(user? user)
@@ -98,6 +101,7 @@ namespace FreelancerWebApp.Controllers
             ViewBag.userName = user.user_name;
             ViewBag.UserEmail = user.user_email;
             ViewBag.userid = User.Identity.Name;
+            ViewBag.Money = user.Money +"$";
             return View(await _context.job.ToListAsync());
         }
 
@@ -113,18 +117,31 @@ namespace FreelancerWebApp.Controllers
         public async Task<IActionResult> Comment(Comment Comment)
         {
             var job = _context.job.Find(Comment.JobId);
-            var user = _context.user.FirstOrDefault(x => x.user_email == job.Owner_ID);
-            Comment.UserId =user.Id;
+            var Owner_user = _context.user.FirstOrDefault(x => x.user_email == job.Owner_ID);
+            var Freelancer_user = _context.user.FirstOrDefault(x => x.user_email == job.Freelancer_ID);
+            Comment.UserId = Owner_user.Id;
 
             Comment.job = job;
-            Comment.user = user;
+            Comment.user = Owner_user;
             job.Confirmed = true;
 
+            var OwnerMoneyFinalCount = Owner_user.Money - job.Offered_Price;
+            Owner_user.Money = OwnerMoneyFinalCount;
+
+            var FreelancerMoneyFinalCount = Freelancer_user.Money + job.Offered_Price;
+            Freelancer_user.Money = FreelancerMoneyFinalCount;
+
+            _context.user.Update(Freelancer_user);
+            _context.SaveChanges();
+
+            _context.user.Update(Owner_user);
+            _context.SaveChanges();
+
             _context.job.Update(job);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             _context.Comment.Add(Comment);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             //if (ModelState.IsValid)
             //{
@@ -141,6 +158,31 @@ namespace FreelancerWebApp.Controllers
         {
             var job = _context.job.Find(id);
             job.Confirmed = true;
+
+            var Owner_user = _context.user.FirstOrDefault(x=> x.user_email == job.Owner_ID);
+            var Freelancer_user = _context.user.FirstOrDefault(x=> x.user_email == job.Freelancer_ID);
+
+            var OwnerUserFinalMoneyCount = Owner_user.Money - job.Offered_Price;
+            var FreelancerUserFinalMoneyCount = Freelancer_user.Money + job.Offered_Price;
+
+            Owner_user.Money = OwnerUserFinalMoneyCount;
+            Freelancer_user.Money = FreelancerUserFinalMoneyCount;
+
+            _context.user.Update(Owner_user);
+            _context.user.Update(Freelancer_user);
+            _context.job.Update(job);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Profile", "Home");
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Revision (int? id)
+        {
+            var job = _context.job.Find(id);
+            job.Deliver_File_Path = "1";
+            job.Confirmed = false;
             _context.job.Update(job);
             await _context.SaveChangesAsync();
             return RedirectToAction("Profile", "Home");
@@ -206,6 +248,29 @@ namespace FreelancerWebApp.Controllers
         private bool jobExists(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IActionResult> AddMoney(AddMoneyComponentViewModel addMoneyComponentViewModel)
+        {
+            var UserEmail=User.Identity.Name;
+            try
+            {
+                var users = _mapper.Map<user>(addMoneyComponentViewModel);
+                var user = _context.user.FirstOrDefault(x => x.user_email == UserEmail);
+                var FinalMoneyCount = user.Money + addMoneyComponentViewModel.Money;
+                user.Money = FinalMoneyCount;
+                _context.user.Update(user);
+                _context.SaveChanges();
+                TempData["result"] = "true";
+                return RedirectToAction(nameof(HomeController.Profile));
+            }
+            catch (Exception)
+            {
+                TempData["result"] = "true";
+                return View(nameof(HomeController.Profile));
+            }
+            
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -49,7 +49,7 @@
                 <div class="row py-3">
                     <div class="col-sm-5"><button class="btn btn-outline-primary" name="confirm" onClick="showModal()">Confirm</button></div>
                     <div class="col-sm-2"></div>
-                    <div class="col-sm-5"><button class="btn btn-outline-danger" name="revision">Request Revision</button></div>
+                            <div class="col-sm-5"><a class="btn btn-outline-danger" name="revision" asp-controller="Home" asp-action="Revision" asp-route-id="@Model.Id">Request Revision</a></div>
                 </div>
             </div>
         </div>

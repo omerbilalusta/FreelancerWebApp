@@ -33,238 +33,302 @@
     </section>
 </header>
 
-
-<div class="container-fluid">
-    <div class="container">
-        <div class="row gx-5">
-            <div class=" col-lg-3 mb-5 mb-lg-0 py-5 my-5">
-                <div class="">
-                    <br /> 
-                    <br />
-                    <br />
-                    <div class="card shadow-sm customcontainer bg-light">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                        <div class="card-body my-3">
-                            <p><strong>Name: </strong>@ViewBag.userName</p>
-                            <p><strong>E-mail: </strong>@ViewBag.userEmail</p>
-                        </div>
-                    </div>
-                    
-                </div>
+@if (TempData["result"] != null)
+{
+    if (TempData["result"].ToString() == "true")
+    {
+        <div class="container py-3">
+            <div class="alert alert-success" role="alert">
+                Money added successfully;
             </div>
-            <div class=" col-lg-9 mb-5 mb-lg-0">
-                @*<div>
-                    <h4 class="text-center fw-bolder">Welcome To Your Profile @ViewBag.userid</h4>
-                </div>*@
-                <div class="album py-5 ">
-                    <h3 class="text-center my-5">Jobs I posted</h3>
-                    <div class="">
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                            @foreach (var item in Model)
-                            {
-                                if (item.Owner_ID == ViewBag.userid && item.Deliver_File_Path != "0" && item.Confirmed == false)
-                                {
-                                    <div class="col">
-                                        <div class="card shadow-sm">
-                                            @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
-
-                                            <div class="card-body" style="color:#ffbb33; background-color:#285238;">
-                                                <div style="min-height:200px; max-height:200px;">
-                                                    <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
-                                                    <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
-                                                </div>
-
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
-                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
-                                                    </div>
-                                                    <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
-                                                    <div class="btn-group">
-                                                        <a class="btn btn-primary btn-sm text-light" asp-controller="jobs" asp-action="Delivery" asp-route-id="@item.Id">Delivery</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                                else if (item.Owner_ID == ViewBag.userid && item.Deliver_File_Path == "0" && item.Confirmed == false)
-                                {
-                                    <div class="col">
-                                        <div class="card shadow-sm">
-                                            @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
-
-                                            <div class="card-body" style="color:#ffbb33; background-color:#285238;">
-                                                <div style="min-height:200px; max-height:200px;">
-                                                    <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
-                                                    <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
-                                                </div>
-
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
-                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm"  data-bs-toggle="modal" data-bs-target="modalContent">View</button>
-                                                    </div>
-                                                    <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-sm btn-success" type="button">Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
-                    <h3 class="text-center my-5">Jobs I got</h3>
-                    <div class="">
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                            @foreach (var item in Model)
-                            {
-                                if (item.Freelancer_ID == ViewBag.userid && item.Deliver_File_Path == "0" && item.Confirmed == false)
-                                {
-                                    <div class="col">
-                                        <div class="card shadow-sm">
-                                            @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
-
-                                            <div class="card-body" style="color:#ffbb33; background-color:#285238;">
-                                                <div style="min-height:200px; max-height:200px;">
-                                                    <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
-                                                    <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
-                                                </div>
-
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
-                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm"  data-bs-toggle="modal" data-bs-target="modalContent">View</button>
-                                                    </div>
-                                                    <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
-                                                    <!---->
-                                                    <div class="btn-group">
-                                                        <!--<button class="btn btn-sm btn-success" type="button"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>-->
-                                                        <a class="btn btn-primary btn-sm text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id"> Deliver </a>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
-                    <h3 class="text-center my-5">Jobs I Delivered</h3>
-                    <div class="">
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                            @foreach (var item in Model)
-                            {
-                                if (item.Freelancer_ID == ViewBag.userid && item.Deliver_File_Path != "0" && item.Confirmed == false)
-                                {
-                                    <div class="col">
-                                        <div class="card shadow-sm">
-                                            @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
-
-                                            <div class="card-body" style="color:#ffbb33; background-color:#285238;">
-                                                <div style="min-height:200px; max-height:200px;">
-                                                    <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
-                                                    <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
-                                                </div>
-
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
-                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm"  data-bs-toggle="modal" data-bs-target="modalContent">View</button>
-
-                                                    </div>
-                                                    <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
-                                                    <!---->
-                                                    <div class="btn-group">
-                                                        <!--<button class="btn btn-sm btn-success" type="button"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>-->
-                                                        <button class="btn btn-sm btn-primary" type="button" disabled> <a class="btn btn-sm btn-primary text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id">Deliver </a></button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
-                    <h3 class="text-center my-5">Completed Jobs</h3>
-                    <div class="">
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                            @foreach (var item in Model)
-                            {
-                                if (item.Owner_ID == ViewBag.userid && item.Deliver_File_Path != "0" && item.Confirmed != false)
-                                {
-                                    <div class="col">
-                                        <div class="card shadow-sm">
-                                            @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
-
-                                            <div class="card-body" style="color:#ffbb33; background-color:#285238;">
-                                                <div style="min-height:200px; max-height:200px;">
-                                                    <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
-                                                    <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
-                                                </div>
-
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
-                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
-
-                                                    </div>
-                                                    <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
-                                                    <!---->
-                                                    <div class="btn-group">
-                                                        <!--<button class="btn btn-sm btn-success" type="button"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>-->
-                                                        <button class="btn btn-sm btn-primary" type="button" disabled> <a class="btn btn-sm btn-primary text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id">Completed</a></button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                                else if (item.Freelancer_ID == ViewBag.userid && item.Deliver_File_Path != "0" && item.Confirmed != false)
-                                {
-                                    <div class="col">
-                                        <div class="card shadow-sm">
-                                            @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
-
-                                            <div class="card-body" style="color:#ffbb33; background-color:#285238;">
-                                                <div style="min-height:200px; max-height:200px;">
-                                                    <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
-                                                    <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
-                                                </div>
-
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
-                                                        <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
-
-                                                    </div>
-                                                    <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
-                                                    <!---->
-                                                    <div class="btn-group">
-                                                        <!--<button class="btn btn-sm btn-success" type="button"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>-->
-                                                        <button class="btn btn-sm btn-primary" type="button" disabled> <a class="btn btn-sm btn-primary text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id">Completed</a></button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class=" col-lg-0 mb-5 mb-lg-0 py-5 my-5"></div>
         </div>
+
+    }
+    else
+    {
+        <div class="container py-3">
+            <div class="alert alert-warning" role="alert">
+                <p>Something went wrong</p>
+            </div>
+        </div>
+
+    }
+}
+
+<div class="container">
+    <div class="row gx-3">
+        <div class=" col-lg-3 mb-5 mb-lg-0 py-1 my-5">
+            <div class="">
+                <br />
+                <br />
+                <br />
+                <div class="card shadow-sm customcontainer bg-light">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+                    <div class="card-body my-3">
+                        <p><strong>Name: </strong>@ViewBag.userName</p>
+                        <p><strong>E-mail: </strong>@ViewBag.userEmail</p>
+                        <p><strong>Current Money: </strong>@ViewBag.Money</p>
+                        <vc:add-money></vc:add-money>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class=" col-lg-9 mb-5 mb-lg-0">
+            @*<div>
+            <h4 class="text-center fw-bolder">Welcome To Your Profile @ViewBag.userid</h4>
+            </div>*@
+            <div class="album py-5 ">
+                @*@{
+                var counter = 0;
+                }*@
+                <h3 class="text-center my-5">Revision Requested</h3>
+                <div class="">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        @foreach (var item in Model)
+                        {
+                            //if (item.Deliver_File_Path == "1" && item.Freelancer_ID == ViewBag.userid && counter == 0)
+                            //{
+                            //    <h3>Revision Requested</h3>
+                            //    {
+                            //        counter++;
+                            //    }
+
+                            //}
+                            if (item.Deliver_File_Path == "1" && item.Freelancer_ID == ViewBag.userid)
+                            {
+
+                                <div class="col">
+                                    <div class="card shadow-sm">
+                                        @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
+
+                                        <div class="card-body" style="color:#ffbb33; background-color:#285238;">
+                                            <div style="min-height:200px; max-height:200px;">
+                                                <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                                <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="btn-group">
+                                                    @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                    <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
+                                                </div>
+                                                <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-primary btn-sm text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id"> Deliver </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <hr />
+                <h3 class="text-center my-3">Jobs I posted</h3>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    @foreach (var item in Model)
+                    {
+                        if (item.Owner_ID == ViewBag.userid && item.Deliver_File_Path != "0" && item.Deliver_File_Path != "1" && item.Confirmed == false)
+                        {
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
+
+                                    <div class="card-body" style="color:#ffbb33; background-color:#285238;">
+                                        <div style="min-height:200px; max-height:200px;">
+                                            <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                            <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
+                                            </div>
+                                            <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                            <div class="btn-group">
+                                                <a class="btn btn-primary btn-sm text-light" asp-controller="jobs" asp-action="Delivery" asp-route-id="@item.Id">Delivery</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (item.Owner_ID == ViewBag.userid && (item.Deliver_File_Path == "0" || item.Deliver_File_Path == "1") && item.Confirmed == false)
+                        {
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
+
+                                    <div class="card-body" style="color:#ffbb33; background-color:#285238;">
+                                        <div style="min-height:200px; max-height:200px;">
+                                            <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                            <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
+                                            </div>
+                                            <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-success" type="button">Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <hr />
+                <h3 class="text-center my-3">Jobs I got</h3>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    @foreach (var item in Model)
+                    {
+                        if (item.Freelancer_ID == ViewBag.userid && item.Deliver_File_Path == "0" && item.Confirmed == false)
+                        {
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
+
+                                    <div class="card-body" style="color:#ffbb33; background-color:#285238;">
+                                        <div style="min-height:200px; max-height:200px;">
+                                            <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                            <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
+                                            </div>
+                                            <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                            <!---->
+                                            <div class="btn-group">
+                                                <!--<button class="btn btn-sm btn-success" type="button"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>-->
+                                                <a class="btn btn-primary btn-sm text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id"> Deliver </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <hr />
+                <h3 class="text-center my-3">Jobs I Delivered</h3>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    @foreach (var item in Model)
+                    {
+                        if (item.Freelancer_ID == ViewBag.userid && item.Deliver_File_Path != "0" && item.Confirmed == false)
+                        {
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
+
+                                    <div class="card-body" style="color:#ffbb33; background-color:#285238;">
+                                        <div style="min-height:200px; max-height:200px;">
+                                            <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                            <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
+
+                                            </div>
+                                            <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                            <!---->
+                                            <div class="btn-group">
+                                                <!--<button class="btn btn-sm btn-success" type="button"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>-->
+                                                <button class="btn btn-sm btn-primary" type="button" disabled> <a class="btn btn-sm btn-primary text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id">Deliver </a></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <hr />
+                <h3 class="text-center my-3">Completed Jobs</h3>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    @foreach (var item in Model)
+                    {
+                        if (item.Owner_ID == ViewBag.userid && item.Deliver_File_Path != "0" && item.Confirmed != false)
+                        {
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
+
+                                    <div class="card-body" style="color:#ffbb33; background-color:#285238;">
+                                        <div style="min-height:200px; max-height:200px;">
+                                            <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                            <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
+
+                                            </div>
+                                            <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                            <!---->
+                                            <div class="btn-group">
+                                                <!--<button class="btn btn-sm btn-success" type="button"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>-->
+                                                <button class="btn btn-sm btn-primary" type="button" disabled> <a class="btn btn-sm btn-primary text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id">Completed</a></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (item.Freelancer_ID == ViewBag.userid && item.Deliver_File_Path != "0" && item.Confirmed != false)
+                        {
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    @*<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
+
+                                    <div class="card-body" style="color:#ffbb33; background-color:#285238;">
+                                        <div style="min-height:200px; max-height:200px;">
+                                            <h5 class="text-light">@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
+                                            <p class="card-text text-light ">@Html.DisplayFor(modelItem => item.Job_Description)</p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                @*<a class="btn btn-warning btn-sm" asp-controller="jobs" asp-action="Details" asp-route-id="@item.Id">View</a>*@
+                                                <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="modalContent">View</button>
+
+                                            </div>
+                                            <small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>
+                                            <!---->
+                                            <div class="btn-group">
+                                                <!--<button class="btn btn-sm btn-success" type="button"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$</button>-->
+                                                <button class="btn btn-sm btn-primary" type="button" disabled> <a class="btn btn-sm btn-primary text-light" asp-controller="jobs" asp-action="Deliver" asp-route-id="@item.Id">Completed</a></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class=" col-lg-0 mb-5 mb-lg-0 py-5 my-5"></div>
     </div>
 </div>
 
@@ -317,7 +381,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="modalContent" onclick="hideModal(@item.Id)" aria-label=" Close">Kapat</button>
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="btn btn-primary" asp-controller="jobs" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="modalContent" onclick="hideModal(@item.Id)" aria-label=" Close">Kapat</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

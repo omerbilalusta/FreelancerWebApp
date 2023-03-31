@@ -31,5 +31,6 @@ namespace FreelancerWebApp.ViewModels
         public string? Job_Photo_Path { get; set; }
 
         public DateTime Publish_Date { get; set; }
+        public bool Confirmed { get; set; }
     }
 }

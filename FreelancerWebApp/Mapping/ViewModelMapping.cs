@@ -10,6 +10,7 @@ namespace FreelancerWebApp.Mapping
         {
             CreateMap<job, JobViewModel>().ReverseMap();
             CreateMap<job, JobAddViewModel>().ReverseMap();
+            CreateMap<user, AddMoneyComponentViewModel>().ReverseMap();
         }
 
     }
