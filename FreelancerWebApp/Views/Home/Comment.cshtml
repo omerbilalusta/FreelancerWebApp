@@ -3,27 +3,78 @@
     @await Component.InvokeAsync("Comment")
 </div>*@
 
-<div class="container">
-    <form asp-action="Comment">
-        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
-        
-        <input type="hidden" asp-for="JobId" value="@ViewBag.jobId" />
-        <span asp-validation-for="JobId" class="text-danger"></span>
-        <input type="hidden" asp-for="UserId" value="1" />
-        <span asp-validation-for="UserId" class="text-danger"></span>
-        <input type="hidden" asp-for="Created" value="@ViewBag.Date" />
-        <span asp-validation-for="Created" class="text-danger"></span>
-        <input type="hidden" asp-for="Id" value="" />
-        <span asp-validation-for="Id" class="text-danger"></span>
-        <div class="form-group">
-            <label asp-for="text">Comment</label>
-            <textarea asp-for="text" class="form-control my-2" placeholder="Comment" id="floatingTextarea" style="height:100px"></textarea>
-            <span asp-validation-for="text" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary my-2">Submit</button>
-    </form>
-</div>
+<style type="text/css">
+.likecontainer {
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+    border-radius: 30px;
+    background-color: #ffffff;
+}
+</style>
 
 <div class="container">
-    <vc:comment></vc:comment>
+    <div class="row gx-5">
+        <div class="col-lg-8 mb-5 mb-lg-0 my-5">
+            <div class="likecontainer">
+                <form asp-action="Comment">
+                    @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                    <input type="hidden" asp-for="JobId" value="@ViewBag.jobId" />
+                    <span asp-validation-for="JobId" class="text-danger"></span>
+                    <input type="hidden" asp-for="UserId" value="1" />
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                    <input type="hidden" asp-for="Created" value="@ViewBag.Date" />
+                    <span asp-validation-for="Created" class="text-danger"></span>
+                    <input type="hidden" asp-for="Id" value="" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                    Rate
+                    <div class="row">
+                        <div class="col col-lg-1">
+                            <input type="radio" id="age1" name="rate" value="1" asp-for="rate">
+                            <label for="rate1">1</label><br>
+                        </div>
+                        <div class="col col-lg-1">
+                            <input type="radio" id="age2" name="rate" value="2" asp-for="rate">
+                            <label for="rate2">2</label><br>
+                        </div>
+                        <div class="col col-lg-1">
+                            <input type="radio" id="age3" name="rate" value="3" asp-for="rate">
+                            <label for="rate3">3</label><br>
+                        </div>
+                        <div class="col col-lg-1">
+                            <input type="radio" id="age4" name="rate" value="4" asp-for="rate">
+                            <label for="rate1">4</label><br>
+                        </div>
+                        <div class="col col-lg-1">
+                            <input type="radio" id="age5" name="rate" value="5" asp-for="rate">
+                            <label for="rate1">5</label><br>
+                        </div>
+                        <span asp-validation-for="rate" class="text-danger"></span>
+                        <div class="form-group py-2">
+                            <label asp-for="text">Comment</label>
+                            <textarea asp-for="text" class="form-control my-2" placeholder="Comment" id="floatingTextarea" style="height:100px"></textarea>
+                            <span asp-validation-for="text" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary my-2">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-5 mb-lg-0 my-5">
+            <div class="likecontainer">
+                <div class="text-center">
+                    <h3 class="text-center">Usefull Tips</h3>
+                    <h4> </h4>
+                    <hr />
+                </div>
+                <p><strong>1.</strong> Rate the delivery based on your experinece with this freelancer.</p>
+                <p><strong>2.</strong> Set a comment to evaluate and commentate all the experience, such as product and freelancer.</p>
+                <br />
+                <br />
+                <br />
+            </div>
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
 </div>

@@ -1,0 +1,73 @@
+﻿@model List<CommentListComponentViewModel>
+
+@{
+    var counter = 0;
+    var toplam = 0;
+    double averageRate = 0.0;
+    @foreach (var item in Model)
+    {
+        counter++;
+        toplam += item.rate;
+    }
+    if (counter != 0)
+    {
+        averageRate = (double)toplam / counter;
+    }
+}
+
+<header class="bg-dark py-2">
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto " style="color:#ffbb33;">
+                <h1 class="display-5 fw-bolder mb-2">Reviews</h1>
+                <h4>@ViewBag.userName~@ViewBag.userEmail</h4>
+                <p class="fw-bolder text-white">You can see @ViewBag.userEmail 's reviews of its works</p>
+                <div style="text-align:center;">
+                    @if(counter>0)
+                    {
+                        if (@averageRate.ToString().Length>3)
+                        {
+                            <p>@counter job has been done so far with @averageRate.ToString().Substring(0,3) average rate.</p>
+                        }
+                        else
+                        {
+                            <p>@counter job has been done so far with @averageRate average rate.</p>
+                        }
+
+                    }
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+</header>
+
+<div class="container py-5">
+    <ul class="list-group">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item py-3">
+                <div class="row">
+                    <div class="col-10">
+                        <h4>@item.jobName</h4>
+                        @item.Comment
+                    </div>
+                    <div class="col-2">
+                        <div class="row" style="text-align:right;">
+                            ~@item.userName
+                        </div>
+                        <div class="row" style="text-align:right">
+                            Rate: @item.rate*
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+        @if (counter == 0)
+        {
+            <div class="alert alert-danger">
+                <p>There is no comment for this user (@ViewBag.userEmail)</p>
+            </div>
+        }
+    </ul>
+</div>

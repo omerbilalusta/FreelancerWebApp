@@ -1,42 +1,4 @@
-﻿//using FreelancerWebApp.Models;
-//using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-//using Microsoft.AspNetCore.Mvc;
-//using System.Diagnostics;
-
-//namespace FreelancerWebApp.Controllers
-//{
-//    public class HomeController : Controller
-//    {
-//        private readonly ILogger<HomeController> _logger;
-
-//        public HomeController(ILogger<HomeController> logger)
-//        {
-//            _logger = logger;
-//        }
-
-//        public IActionResult Index()
-//        {
-//            return View();
-//        }
-
-//        public IActionResult Privacy()
-//        {
-
-//            return View();
-//        }
-
-//        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-//        public IActionResult Error()
-//        {
-//            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-//        }
-//    }
-//}
-
-
-
-using AutoMapper;
+﻿using AutoMapper;
 using FreelancerWebApp.Data;
 using FreelancerWebApp.Models;
 using FreelancerWebApp.ViewModels;
@@ -92,6 +54,37 @@ namespace FreelancerWebApp.Controllers
 
             return View(await _context.job.ToListAsync());
         }
+        public async Task<IActionResult> Reviews()
+        {
+            var list = _context.user.Select(x => new UserListReviewViewModel()
+            {
+                Id = x.Id,
+                user_email = x.user_email,
+                user_name = x.user_name
+            }).ToList();
+            return View(list);
+        }
+        public async Task<IActionResult> ReviewsOf(int? id)
+        {
+            var list = _context.Comment.Where(s => s.freelancerUserID == id).Select(x => new CommentListComponentViewModel()
+            {
+                Comment = x.text,
+                userName = x.ownerUser.user_email,
+                freelancerName = x.job.Freelancer_ID,
+                rate = x.rate,
+                jobName = x.job.Job_Title
+            }).ToList();
+            var freelancerUser = _context.user.Find(id);
+
+
+            if (freelancerUser == null)
+            {
+                return Json("There is no user with this name");
+            }
+            ViewBag.userName = freelancerUser.user_name;
+            ViewBag.userEmail = freelancerUser.user_email;
+            return View(list);
+        }
 
         [Authorize]
         public async Task<IActionResult> Profile()
@@ -119,10 +112,11 @@ namespace FreelancerWebApp.Controllers
             var job = _context.job.Find(Comment.JobId);
             var Owner_user = _context.user.FirstOrDefault(x => x.user_email == job.Owner_ID);
             var Freelancer_user = _context.user.FirstOrDefault(x => x.user_email == job.Freelancer_ID);
-            Comment.UserId = Owner_user.Id;
+            Comment.ownerUserId = Owner_user.Id;
 
             Comment.job = job;
-            Comment.user = Owner_user;
+            Comment.ownerUser = Owner_user;
+            Comment.freelancerUserID = Freelancer_user.Id;
             job.Confirmed = true;
 
             var OwnerMoneyFinalCount = Owner_user.Money - job.Offered_Price;
@@ -143,12 +137,6 @@ namespace FreelancerWebApp.Controllers
             _context.Comment.Add(Comment);
             _context.SaveChanges();
 
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Comment.Add(Comment);
-            //    await _context.SaveChangesAsync();
-            //    return View();
-            //}
             return RedirectToAction("Profile");
             
         }
@@ -195,55 +183,7 @@ namespace FreelancerWebApp.Controllers
             return View(await _context.job.ToListAsync());
         }
 
-        //Post // Kullanılmıyor !!!
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult UploadDone(IFormFile fileUploadinput/*, IFormFile jobNo*/, int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID,Deliver_File_Path")] job job)
-        {
-            string uniqueFileName = null;
-            var dir = _env.ContentRootPath + "\\wwwroot\\UploadedFiles";
-            uniqueFileName = Guid.NewGuid().ToString()+ "_" + fileUploadinput.FileName;
-            using(var fileStream = new FileStream(Path.Combine(dir,uniqueFileName), FileMode.Create, FileAccess.Write))
-            {
-                fileUploadinput.CopyTo(fileStream);
-            }
-            
-            //if (jobNo == job.Id)
-            //{
-                job.Deliver_File_Path = Path.Combine(dir, uniqueFileName);
-            //}
-            if (id != job.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(job);
-                    _context.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!jobExists(job.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Profile");
-            }
-
-            //_context.Update(job);
-            //_dbContext.SaveChanges();
-            return RedirectToAction("Profile");
-            //return View(job);
-        }
+        
 
         private bool jobExists(int id)
         {

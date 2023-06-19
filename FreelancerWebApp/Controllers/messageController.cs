@@ -31,13 +31,16 @@ namespace FreelancerWebApp.Controllers
             //ViewBag.userr = new SelectList(inbox, "Id", "last_sent_user_id");
             //ViewBag.userrr = new SelectList(inbox, "Id","Id");
             var userEmail = User.Identity.Name;
+            ViewBag.userEmail = userEmail;
             var user = _context.user.FirstOrDefault(x => x.user_email == userEmail);
             var inboxes = _context.inbox.OrderBy(x => x.Id).Where(x=>x.last_user_sent_id == user.Id || x.last_receiver_user_id == user.Id).Select(x => new InboxViewModel()
             {
                 
                 Id = x.Id,
                 last_message = x.last_message,
-                last_message_sender_name = x.user.user_email
+                last_message_sender_name = x.user.user_email,
+                user2 = _context.user.FirstOrDefault(a => a.Id == x.last_receiver_user_id).user_email,
+                user1 = _context.user.FirstOrDefault(a => a.Id == x.last_user_sent_id).user_email
 
             }).ToList();
 
@@ -49,82 +52,6 @@ namespace FreelancerWebApp.Controllers
             return View(await _context.inbox.ToListAsync());
         }
         
-        [Authorize]
-        public async Task<IActionResult> SendMessage()
-        {
-            //return Json("ok");
-
-            //var message = await _context.message.Join();
-
-            return View(await _context.message.ToListAsync());
-
-
-
-
-            //if (id == null || _context.message == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var message = await _context.message.FindAsync(id);
-            //if (message == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(message);
-
-            //ViewBag.messages = new List<string>() { _context.message.Find(id) };
-
-            //Dictionary<string, DateTime, int, int> messageList = new Dictionary<string, DateTime, int, int>();
-
-            //List<object> messageId = new List<object>();
-            //List<object> messagesText = new List<object>();
-            //List<object> dateCreated = new List<object>();
-            //List<object> inboxId = new List<object>();
-            //List<object> userId = new List<object>();
-            //var counter = 0;
-
-
-            //foreach (var item in _context.message.Where(c => c.inbox.Id == id))
-            //{
-            //    if(item.message_text == null)
-            //    {
-            //        messagesText.Add("0");
-            //    }
-            //    else
-            //    {
-            //        messagesText.Add(item.message_text);
-            //    }
-
-            //    messageId.Add(item.Id);
-            //    dateCreated.Add(item.date_created);
-            //    inboxId.Add(item.user.Id);
-            //    userId.Add(item.inbox.Id);
-
-            //    counter = counter + 1;
-            //}
-
-            //ViewBag.messageIds = messageId;
-            //ViewBag.messagesTexts = messagesText;
-            //ViewBag.dateCreateds = dateCreated;
-            //ViewBag.inboxIds = inboxId;
-            //ViewBag.userIds = userId;
-            //ViewBag.counter = counter;
-
-            //return View();
-            //return View(await _context.job.ToListAsync());
-
-
-
-        }
-        
-        [Authorize]
-        public async Task<IActionResult> asd(int? id)
-        {
-            
-            return View(await _context.message.Where(c => c.inboxId == id).ToListAsync());
-        }
 
         [Authorize]
         public async Task<IActionResult> _messagePartial(int? id)
@@ -132,12 +59,23 @@ namespace FreelancerWebApp.Controllers
             ViewBag.user = User.Identity.Name;
             ViewBag.Date = DateTime.Now;
             ViewBag.inboxId = id;
-
+            
+            var chat = _context.inbox.Find(id);
+            var user1 = _context.user.FirstOrDefault(acc => acc.Id == chat.last_receiver_user_id);
+            var user2 = _context.user.FirstOrDefault(acc => acc.Id == chat.last_user_sent_id);
+            if(user1.user_email == User.Identity.Name)
+            {
+                ViewBag.senderUser = user2.user_name;
+                ViewBag.senderUserEmail = user2.user_email;
+            }
+            else
+            {
+                ViewBag.senderUser = user1.user_name;
+                ViewBag.senderUserEmail = user1.user_email;
+            }
             var dbEntry = _context.inbox.FirstOrDefault(acc => acc.Id == id);
             ViewBag.userId = dbEntry.last_user_sent_id;
 
-            var user = _context.user.FirstOrDefault(acc => acc.user_email == User.Identity.Name);
-            //ViewBag.username = user.user_email;
 
             var messages = _context.message.OrderBy(x => x.Id).Where(c => c.inboxId == id).Select(x => new MessagePartialViewModel()
             {
@@ -153,8 +91,6 @@ namespace FreelancerWebApp.Controllers
             {
                 Messages = messages
             };
-
-            //var FindUser = _context.user.Where(x => x.Id == dbEntry.);
 
             return View();
         }
@@ -206,23 +142,6 @@ namespace FreelancerWebApp.Controllers
         }
 
 
-
-
-        //[Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID,Deliver_File_Path")] job job
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> asd(int id, message newMessage)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(newMessage);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(asd));
-            }
-            return View(newMessage);
-        }
-
         public IActionResult messages()
         {
 
@@ -240,24 +159,12 @@ namespace FreelancerWebApp.Controllers
                 Messages = messages
             };
 
-            //var users = _context.Users.OrderBy(x => x.Id).Select(x => new UserPartialViewModel()
-            //{
-
-            //});
-            //ViewBag.userEmail = _context.Users.ToList();
-
             return View();
 
         }
 
         public IActionResult createChat()
         {
-
-            //ViewBag.userList = new SelectList(_context.user.OrderBy(x => x.Id).Select(x => new List<UserViewModel>()
-            //{
-            //    new(){Id=x.Id, user_email=x.user_email }
-            //}), "Id", "user_email");
-
             return View();
         }
 
@@ -287,7 +194,7 @@ namespace FreelancerWebApp.Controllers
             }
             inbox.last_receiver_user_id= receiverUser.Id;
 
-            var inboxes = _context.inbox.FirstOrDefault(x => x.last_user_sent_id == inbox.last_user_sent_id && x.last_receiver_user_id == inbox.last_receiver_user_id);
+            var inboxes = _context.inbox.FirstOrDefault(x => (x.last_user_sent_id == inbox.last_user_sent_id && x.last_receiver_user_id == inbox.last_receiver_user_id) || (x.last_receiver_user_id == inbox.last_user_sent_id && x.last_user_sent_id == inbox.last_receiver_user_id));
             if (inboxes != null)
             {
                 TempData["alert"]="This chat already exist";

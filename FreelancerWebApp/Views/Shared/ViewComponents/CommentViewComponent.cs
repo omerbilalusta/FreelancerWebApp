@@ -23,7 +23,8 @@ namespace FreelancerWebApp.Views.Shared.ViewComponents
             var list = _context.Comment.Select(x => new CommentListComponentViewModel()
             {
                 Comment = x.text,
-                userName = x.user.user_email
+                userName = x.ownerUser.user_email,
+                freelancerName = x.job.Freelancer_ID
             }).ToList();
             //ViewBag.jobId = jobId;
             //ViewBag.Date=DateTime.Now;

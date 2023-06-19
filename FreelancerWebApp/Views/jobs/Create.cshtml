@@ -43,8 +43,7 @@
                         <label asp-for="Job_Category" class="control-label">Category of Job</label>
                     </div>
                     <div class="my-1">
-                        <!--<input asp-for="Job_Category" class="form-control" placeholder="Type Job Category(Software, Text, Graphic Design)" />-->
-                        <select asp-for="Job_Category" asp-items="@ViewBag.ColorSet" class="form-select">
+                        <select asp-for="Job_Category" asp-items="@ViewBag.Category" class="form-select">
                             <option value="">Select Category </option>
                         </select>
                         <span asp-validation-for="Job_Category" class="text-danger"></span>
@@ -86,10 +85,6 @@
                                 <span asp-validation-for="Day" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-lg-1 mb-5 mb-lg-0"></div>
-                        <div class="col-lg-3 mb-5 mb-lg-0 my-3">
-                            @*<input type="submit" value="Create" class="btn btn-primary" />*@
-                        </div>
                         <div>
                             <input asp-for="Owner_ID" class="form-control" placeholder="Owner_ID" value="@ViewBag.userid" hidden />
                         </div>
@@ -120,16 +115,8 @@
                             </div>
                         </div>
                     </div>
-                    @*<div class="row gx-5 my-3">
-                        <div class="col-lg-9 mb-5 mb-lg-0 my-3">
-                        </div>
-                        <div class="col-lg-3 mb-5 mb-lg-0 my-3">
-                            
-                        </div>
-                    </div>*@
                 </form>
             </div>
-
         </div>
         <div class="col-lg-4 mb-5 mb-lg-0 my-5">
             <div class="likecontainer">
@@ -138,7 +125,7 @@
                     <h4> </h4>
                     <hr />
                 </div>
-                <p><strong>1.</strong> Select A Category. Should matches with your job.</p>
+                <p><strong>1.</strong> Select a category. Should matches with your job.</p>
                 <p><strong>2.</strong> Explain job in as much as detail. It will increase quality of post so Freelancers can understand it much better. At the end, you will receive more complete result.</p>
                 <p><strong>3.</strong> Match requirements of your job and price of it. Otherwise you may get worse result than you think.</p>
                 <br />

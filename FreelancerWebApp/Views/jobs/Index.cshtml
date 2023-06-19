@@ -1,6 +1,4 @@
-﻿@*@model IEnumerable<FreelancerWebApp.Models.job>*@
-
-@{
+﻿@{
     ViewData["Title"] = "Jobs";
 }
 @model List<JobViewModel>
@@ -16,13 +14,12 @@
     };
 </script>
 
-<header @*class="bg-dark py-2"*@ style="background-color:#285238;">
+<header class="bg-dark py-2">
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto " style="color:#ffbb33;">
                 <h1 class="display-5 fw-bolder mb-2">Job Post Page</h1>
-                <p class="fw-bolder" style="color:#ffbb33;">Publish Job, Increase our database size :)</p>
-                <!--#717820-->
+                <p class="fw-bolder" style="color:#ffbb33;">Publish a job, increase our database size :)</p>
                 <p>
                     <a asp-action="Create" class="btn btn-warning my-2">Create New Job</a>
                 </p>
@@ -56,14 +53,25 @@
             @foreach (var item in Modell)
             {
                 <div class="col">
-                    <div class="card shadow-sm" style="background-color:#285238;">
-                        <img src="/JobPhotos/@(item.Job_Photo_Path)" />
+                    <div class="card shadow-sm bg-dark">
+                        @if(item.Job_Category == "Graphic Design"){
+                            <img src="/JobPhotos/Stock-Graphic Design.png" />
+                        }
+                        else if(item.Job_Category == "Text")
+                        {
+                            <img src="/JobPhotos/Stock-Text.png" />
+                        }
+                        else if(item.Job_Category == "Software")
+                        {
+                            <img src="/JobPhotos/Stock-Software.png" />
+                        }
+
                         <div class="card-body" style="color:#ffbb33;">
                             <h5>@Html.DisplayFor(modelItem => item.Job_Title) ~ @Html.DisplayFor(modelItem => item.Job_Category)</h5>
                             <p class="card-text">
-                                @if (@item.Job_Description.ToString().Length > 70)
+                                @if (@item.Job_Description.ToString().Length > 40)
                                 {
-                                    @item.Job_Description.ToString().Substring(0,70)<text>...</text>;
+                                    @item.Job_Description.ToString().Substring(0,40)<text>...</text>;
                                 }
                                 else
                                 {
@@ -72,10 +80,8 @@
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    @*<a class="btn btn-warning btn-sm " asp-action="Details" asp-route-id="@item.Id">View</a>*@
                                     <button onclick="showModal(@item.Id)" type="button" class="btn btn-warning btn-sm"  data-bs-toggle="modal" data-bs-target="modalContent">View</button>
                                 </div>
-                                @*<small class="text-warning">Limit: @Html.DisplayFor(modelItem => item.Day) Day</small>*@
                                 <div class="btn-group">
                                     <a class="text-light btn btn-sm btn-success nav-link" asp-action="getJob" asp-route-id="@item.Id"> Price: @Html.DisplayFor(modelItem => item.Offered_Price)$ </a>
                                 </div>
@@ -98,6 +104,9 @@
                     <h5 class="modal-title">Job Details</h5>
                 </div>
                 <div class="modal-body">
+                    <div class="text-center">
+                        <img src="/JobPhotos/@(item.Job_Photo_Path)" width="225" height="225" />
+                    </div>
                     <h4>Title: @item.Job_Title</h4>
                     <h6>Category: @item.Job_Category</h6>
                     <p class="my-3">@item.Job_Description</p>

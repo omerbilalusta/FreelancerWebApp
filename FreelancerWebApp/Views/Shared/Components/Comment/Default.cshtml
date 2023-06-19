@@ -1,39 +1,24 @@
 ﻿@model List<CommentListComponentViewModel>
 
 
-@{
-    //Tablo Görünüm
-}
-@*<table class="table table-striped">
-
-    <thead>
-        <tr>
-            <th>Comment</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Comment</td>
-            </tr>
-        
-        }
-    </tbody>
-    
-</table>*@
-
-@{
-    //Alert Görünüm
-}
 @foreach (var item in Model)
 {
     <div class="alert alert-info" role="alert">
         <div style="padding-left:1%;">
             @item.Comment
             <div style="text-align:right;">
-                ~@item.userName
+                <div class="row">
+                    <div class="col-9"></div>
+                    <div class="col-3">
+                        <div class="row">
+                            Freelancer: @item.freelancerName
+                        </div>
+                        <div class="row">
+                            User: @item.userName
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
         </div>
          

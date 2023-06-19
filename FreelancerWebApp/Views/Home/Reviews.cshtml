@@ -1,0 +1,22 @@
+﻿@model List<UserListReviewViewModel>
+<header class="bg-dark py-2">
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto " style="color:#ffbb33;">
+                <h1 class="display-5 fw-bolder mb-2">Reviews</h1>
+                <p class="fw-bolder text-white">You can see the reviews of the jobs and see the references</p>
+            </div>
+        </div>
+    </section>
+</header>
+
+<div class="container py-5">
+    <ul class="list-group">
+        @foreach(var item in Model)
+        {
+            <li class="list-group-item">
+                <a class="nav-link text-black" asp-controller="Home" asp-action="ReviewsOf" asp-route-id="@item.Id">@item.user_email</a>
+            </li>
+        }
+    </ul>
+</div>

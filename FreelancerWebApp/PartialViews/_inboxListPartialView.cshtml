@@ -5,77 +5,72 @@
 
 <style>
     inbox {
-        height: 700px; /* Mesajların gösterileceği alanın yüksekliğini belirtin */
-        overflow-y: scroll; /* Kaydırma çubuğu oluşturun */
+        height: 700px; 
+        overflow-y: scroll;
     }
 </style>
-@*<div class="inbox">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Inbox ID</th>
-                <th scope="col">Last Sender</th>
-                <th scope="col">Last Message</th>>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                //var Modell = Model.Where(i => i.inbox.Id == 55);
-                //var asd = Model.Where(i => i.inbox.Id == 1);
-            }
 
-            @foreach (var item in Model.Inboxes)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.last_message_sender_name</td>
-                    <td>
-                        @if (@item.last_message.ToString().Length > 20)
-                        {
-                            <text>@item.last_message.ToString().Substring(0,20)</text>
-                        }
-                        else
-                        {
-                            <text>@item.last_message</text>
-                        }
-                    </td>
-                    <td><button class="btn btn-sm btn-outline-warning"> <a class="nav-link text-black" asp-controller="message" asp-action="_messagePartial" asp-route-id="@item.Id">Go to Chat</a></button></td>
+<div style="height: 550px;overflow-y: scroll;">
+    <style>
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
 
-                </tr>
-            }
+        ::-webkit-scrollbar {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
 
-        </tbody>
-    </table>
-</div>*@
-
-
-    @{
-        //var Modell = Model.Where(i => i.inbox.Id == 55);
-        //var asd = Model.Where(i => i.inbox.Id == 1);
-    }
-<div style="height: 700px;overflow-y: scroll;">
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: #00C851;
+        }
+    </style>
     @foreach (var item in Model.Inboxes)
     {
-        <div class="likecontainer mt-3">
+        <div class="py-1">
+            <header class="bg-dark py-2 rounded-pill">
+                <section>
+                    <div class=" col-md-10 mx-auto " style="color:#ffbb33;">
+                        <div class="row h-100 justify-content-center align-items-center">
+                            <div class="col col-lg-6">
 
-            @*@item.Id*@
-            <div class="row mt-2">
-                <div class="col-10">
-                    <span class="text-danger" style="">Last sender - message:</span>
-                    @if (@item.last_message.ToString().Length > 35)
-                    {
-                        <text><span class="text-primary">@item.last_message_sender_name </span>@item.last_message.ToString().Substring(0,20)...</text>
-                    }
-                    else
-                    {
-                        <text><span class="text-primary">@item.last_message_sender_name </span>@item.last_message</text>
-                    }
-                </div>
-                <div class="col-2">
-                    <button class="btn btn-sm btn-outline-warning mt-3"> <a class="nav-link text-black" asp-controller="message" asp-action="_messagePartial" asp-route-id="@item.Id">Go to Chat</a></button>
-                </div>
-            </div>
+                                @if (ViewBag.userEmail == item.user1)
+                                {
+                                    <h5 class="text-white">@item.user2</h5>
+                                }
+                                else
+                                {
+                                    <h5 class="text-white">@item.user1</h5>
+                                }
+                                @if (@item.last_message.ToString().Length > 35)
+                                {
+                                    <text><span class="text-white-50">@item.last_message_sender_name: </span>@item.last_message.ToString().Substring(0,20)...</text>
+                                }
+                                else
+                                {
+                                    <text><span class="text-white-50">@item.last_message_sender_name: </span>@item.last_message</text>
+                                }
+                            </div>
+                            <div class="col col-lg-5">
+                            </div>
+                            <div class="col col-lg-1">
+                                <button class="btn btn-outline-dark">
+                                    <a class="nav-link text-white" asp-controller="message" asp-action="_messagePartial" asp-route-id="@item.Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                        </svg>
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </header>
         </div>
     }
     </div>

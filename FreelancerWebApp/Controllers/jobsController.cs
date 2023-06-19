@@ -83,12 +83,11 @@ namespace FreelancerWebApp.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            //ViewData("UserId");
             ViewBag.userid = User.Identity.Name;
             ViewBag.datenow = DateTime.UtcNow;
-            ViewBag.ColorSet = new SelectList(new List<categorySelectList>()
+            ViewBag.Category = new SelectList(new List<categorySelectList>()
             {
-                new(){Data="Graphic Design", Value="GraphicDesign"},
+                new(){Data="Graphic Design", Value="Graphic Design"},
                 new(){Data="Text", Value="Text"},
                 new(){Data="Software", Value="Software"}
             }, "Value", "Data");
@@ -284,12 +283,10 @@ namespace FreelancerWebApp.Controllers
         }
 
         // POST: jobs/getJob/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> getJob(int id, [Bind("Id,Job_Title,Job_Category,Job_Description,Offered_Price,Day,Owner_ID,Freelancer_ID,Deliver_File_Path")] job job)
+        public async Task<IActionResult> getJob(int id,job job)
         {
             if (id != job.Id)
             {
@@ -376,25 +373,6 @@ namespace FreelancerWebApp.Controllers
             return View(job);
         }
 
-        //[HttpPost]
-        //public ActionResult DownloadFile(string filePath)
-        //{
-        //    // Dosya yolunu doğrulayın ve dosya mevcut olduğundan emin olun
-        //    if (string.IsNullOrEmpty(filePath) || !System.IO.File.Exists(filePath))
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    // HttpResponse nesnesini oluşturun ve öznitelikleri ayarlayın
-        //    var response = new HttpResponse();
-        //    response.Clear();
-        //    response.ContentType = "application/octet-stream";
-        //    response.AddHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(filePath));
-        //    response.WriteFile(filePath);
-        //    response.End();
-
-        //    return new EmptyResult();
-        //}
 
 
 

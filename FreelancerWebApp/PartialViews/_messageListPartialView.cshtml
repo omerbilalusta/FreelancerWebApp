@@ -4,29 +4,28 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <style type="text/css">
-    .messages {
-        height: 550px; /* Mesajların gösterileceği alanın yüksekliğini belirtin */
-        overflow-y: scroll; /* Kaydırma çubuğu oluşturun */
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
+        border-radius: 10px;
     }
+
+    ::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #00C851;
+    }
+    .messages {
+        height: 400px; /*Height of where messages shown*/
+        overflow-y: scroll;
+    }
+    
 </style>
-@*<div class="user-bar">
-    <div class="back">
-        <a class="text-light" asp-contoller="message" asp-action="Index"><i class="zmdi zmdi-arrow-left"></i></a>
-    </div>
-    <div class="name" style="padding-left:2%;">
-        <span>Zeno Rocha</span>
-        <span class="status">offline</span>
-    </div>
-    <div class="actions more">
-        <i class="zmdi zmdi-more-vert"></i>
-    </div>
-    <div class="actions attachment">
-        <i class="zmdi zmdi-attachment-alt"></i>
-    </div>
-    <div class="actions">
-        <i class="zmdi zmdi-phone"></i>
-    </div>
-</div>*@
 <div id="div1" class="messages" onload="asd()">
         @foreach (var item in Model.Messages)
         {
@@ -34,17 +33,11 @@
             {
             <div class="message sent  mt-2">
                 <div class="row">
-                    <div classc="col">
-                        <p>@item.userEmail</p>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-8">
                         <p class="mt-2">@item.message_text</p>
                     </div>
                     <div class="col-4">
                         <h6 class="text-muted text-sm-end">
-                            @*Created at*@
                             <span class="metadata">
                                 <span class="time">
                                     @if (item.date_created.ToString().Length < 20)
@@ -66,15 +59,10 @@
         {
             <div class="message received mt-2">
                 <div class="row">
-                    <div classc="col">
-                        <p>@item.userEmail</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
+                    <div class="col-8">
                         <p class="mt-2">@item.message_text</p>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <h6 class="text-muted text-sm-end">
                             @*Created at*@
                             <span class="metadata">
@@ -190,152 +178,5 @@
             height: 0;
             border-style: solid;
         }
-
-
-    
-    /*.conversation {
-        height: calc(100% - 12px);
-        position: relative;
-        background:#ffffff;
-        background: #efe7dd url("https://cloud.githubusercontent.com/assets/398893/15136779/4e765036-1639-11e6-9201-67e728e86f39.jpg") repeat;
-        z-index: 0;
-    }*/
-
-       /* .conversation ::-webkit-scrollbar {
-            transition: all 0.5s;
-            width: 5px;
-            height: 1px;
-            z-index: 10;
-        }
-
-        .conversation ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .conversation ::-webkit-scrollbar-thumb {
-            background: #b3ada7;
-        }
-
-        .conversation .conversation-container {
-            height: calc(100% - 68px);
-            box-shadow: inset 0 10px 10px -10px #000000;
-            overflow-x: hidden;
-            
-            padding: 0 16px;
-            margin-bottom: 5px;
-        }
-
-            .conversation .conversation-container:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-
-    .message {
-        color: #000;
-        clear: both;
-        line-height: 18px;
-        font-size: 15px;
-        padding: 8px;
-        position: relative;
-        margin: 8px 0;
-        max-width: 85%;
-        word-wrap: break-word;
-        z-index: -1;
-    }
-
-        .message:after {
-            position: absolute;
-            content: "";
-            width: 0;
-            height: 0;
-            border-style: solid;
-        }
-
-    .metadata {
-        display: inline-block;
-        float: right;
-        padding: 0 0 0 7px;
-        position: relative;
-        bottom: -4px;
-    }
-
-        .metadata .time {
-            color: rgba(0, 0, 0, 0.45);
-            font-size: 11px;
-            display: inline-block;
-        }
-
-        .metadata .tick {
-            display: inline-block;
-            margin-left: 2px;
-            position: relative;
-            top: 4px;
-            height: 16px;
-            width: 16px;
-        }
-
-            .metadata .tick svg {
-                position: absolute;
-                transition: 0.5s ease-in-out;
-            }
-
-                .metadata .tick svg:first-child {
-                    -webkit-backface-visibility: hidden;
-                    backface-visibility: hidden;
-                    -webkit-transform: perspective(800px) rotateY(180deg);
-                    transform: perspective(800px) rotateY(180deg);
-                }
-
-                .metadata .tick svg:last-child {
-                    -webkit-backface-visibility: hidden;
-                    backface-visibility: hidden;
-                    -webkit-transform: perspective(800px) rotateY(0deg);
-                    transform: perspective(800px) rotateY(0deg);
-                }
-
-        .metadata .tick-animation svg:first-child {
-            -webkit-transform: perspective(800px) rotateY(0);
-            transform: perspective(800px) rotateY(0);
-        }
-
-        .metadata .tick-animation svg:last-child {
-            -webkit-transform: perspective(800px) rotateY(-179.9deg);
-            transform: perspective(800px) rotateY(-179.9deg);
-        }
-
-    .message:first-child {
-        margin: 16px 0 8px;
-    }
-
-    .message.received {
-        background: #fff;
-        border-radius: 0px 5px 5px 5px;
-        float: left;
-    }
-
-        .message.received .metadata {
-            padding: 0 0 0 16px;
-        }
-
-        .message.received:after {
-            border-width: 0px 10px 10px 0;
-            border-color: transparent #fff transparent transparent;
-            top: 0;
-            left: -10px;
-        }
-
-    .message.sent {
-        background: #e1ffc7;
-        border-radius: 5px 0px 5px 5px;
-        float: right;
-    }
-
-        .message.sent:after {
-            border-width: 0px 0 10px 10px;
-            border-color: transparent transparent transparent #e1ffc7;
-            top: 0;
-            right: -10px;
-        }*/
 
 </style>

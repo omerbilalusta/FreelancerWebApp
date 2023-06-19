@@ -4,12 +4,6 @@
     ViewData["Title"] = "Delete Job";
 }
 
-@*<div class="container">
-    <h1>Delete</h1>
-
-</div>*@
-
-
 <div class="container py-4">
     <h2>Delete Post ~ @Html.DisplayFor(Model => Model.Job_Title)</h2>
     
@@ -63,12 +57,6 @@
                     <dd class="col-sm-10">
                         @Html.DisplayFor(model => model.Freelancer_ID)
                     </dd>
-                    @*<dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.Days)
-                    </dt>
-                    <dd class = "col-sm-10">
-                    @Html.DisplayFor(model => model.Days)
-                    </dd>*@
 
                 </dl>
                 @if (Model.Owner_ID == ViewBag.userid)
@@ -99,23 +87,6 @@
                         </div>
                     </div>
                 }
-
-                @*<form asp-action="Delete">
-                    <input type="hidden" asp-for="Id" />
-
-                    <div class="row">
-                        <div class="col-sm-9"></div>
-                        <div class="col-sm-1">
-                            <input type="submit" value="Delete" class="btn btn-danger" />
-                        </div>
-                        <div class="col-sm-2">
-                            <button class="btn btn-outline-dark btn-success" type="button"><a class="text-white" asp-action="Index">Back to List</a></button>
-                        </div>
-                    </div>
-                </form>*@
-
-
-
             </div>
         </div>
     </div>

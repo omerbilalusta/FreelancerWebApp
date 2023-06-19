@@ -9,6 +9,7 @@ namespace FreelancerWebApp.Models
         public int Id { get; set; }
         public string text { get; set; }
         public DateTime Created { get; set; }
+        public int rate { get; set; }
 
         [ForeignKey("job")]
         [DefaultValue(1)]
@@ -16,12 +17,12 @@ namespace FreelancerWebApp.Models
         [ValidateNever]
         public job job { get; set; }
 
-        [ForeignKey("user")]
+        [ForeignKey("ownerUser")]
         [DefaultValue(1)]
-        public int UserId { get; set; }
+        public int ownerUserId { get; set; }
         [ValidateNever]
-        public user user { get; set; }
-
+        public user ownerUser { get; set; }
+        public int freelancerUserID { get; set; }
         public Comment()
         {
         

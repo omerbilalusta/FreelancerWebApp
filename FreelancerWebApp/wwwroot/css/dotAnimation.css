@@ -1,0 +1,42 @@
+﻿.dot {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: #4b9cdb;
+}
+
+
+.container .dot:nth-last-child(1) {
+    animation: jumpingAnimation 1.2s 0.99s linear infinite;
+}
+
+.container .dot:nth-last-child(2) {
+    animation: jumpingAnimation 1.2s 0.75s linear infinite;
+}
+
+.container .dot:nth-last-child(3) {
+    animation: jumpingAnimation 1.2s 0.50s linear infinite;
+}
+
+.container .dot:nth-last-child(4) {
+    animation: jumpingAnimation 1.2s 0.25s linear infinite;
+}
+
+@keyframes jumpingAnimation {
+    0 {
+        transform: translate(0, 0);
+    }
+
+    16% {
+        transform: translate(0, -15px);
+    }
+
+    33% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
