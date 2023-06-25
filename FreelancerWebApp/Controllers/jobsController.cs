@@ -44,6 +44,34 @@ namespace FreelancerWebApp.Controllers
             return View(_mapper.Map<List<JobViewModel>>(Job));
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> removefreelancer(int? id)
+        {
+            var job = _context.job.FirstOrDefault(x => x.Id == id);
+            job.Freelancer_ID = "0";
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(job);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!jobExists(job.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Profile", "Home");
+            }
+            return RedirectToAction("Profile", "Home");
+        }
 
         // GET: jobs/ShowSearchFrom
         public async Task<IActionResult> ShowSearchForm()
@@ -373,7 +401,7 @@ namespace FreelancerWebApp.Controllers
             return View(job);
         }
 
-
+        
 
 
         private bool jobExists(int id)

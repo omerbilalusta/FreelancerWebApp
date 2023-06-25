@@ -341,6 +341,15 @@
                     </div>
                     <div class="row">
                         <div class="col-3">
+                            <h6>Freelancer:</h6>
+                        </div>
+                        <div class="col-3">
+                            <p>@item.Freelancer_ID</p>
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
                             <h6>Published at: </h6>
                         </div>
                         <div class="col-3">
@@ -364,9 +373,12 @@
                     <div class="modal-footer">
                         <div class="row">
                             <div class="col-6">
+                                <a class="btn btn-primary" asp-controller="jobs" asp-action="removefreelancer" asp-route-id="@item.Id">Remove Freelancer</a>
+                            </div>
+                            <div class="col-2">
                                 <a class="btn btn-primary" asp-controller="jobs" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                             </div>
-                            <div class="col-4">
+                            <div class="col-2">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal" id="modalContent" onclick="hideModal(@item.Id)" aria-label=" Close">Kapat</button>
                             </div>
                         </div>
